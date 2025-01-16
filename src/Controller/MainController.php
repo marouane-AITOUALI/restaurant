@@ -20,11 +20,7 @@ class MainController extends AbstractController
     {
         return $this->render('Registration/inscription.html.twig');
     }
-    #[Route('/login', name: 'app_connexion')]
-    public function connect(): Response
-    {
-        return $this->render('Registration/connexion.html.twig');
-    }
+
     #[Route('/A-propos', name: 'a_propos')]
     public function menu(): Response
     {
