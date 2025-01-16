@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de Bord - KoulMaghreb{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold text-amber-900 mb-8">Tableau de Bord Administrateur</h1>
+
+    {# Statistiques rapides #}
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-amber-100 p-6 rounded-lg shadow-lg text-center">
+            <h2 class="text-2xl font-bold text-amber-900">{{ users|length }}</h2>
+            <p class="text-amber-700">Utilisateurs enregistrés</p>
+        </div>
+        <div class="bg-amber-100 p-6 rounded-lg shadow-lg text-center">
+            <h2 class="text-2xl font-bold text-amber-900">{{ plats|length }}</h2>
+            <p class="text-amber-700">Plats disponibles</p>
+        </div>
+        <div class="bg-amber-100 p-6 rounded-lg shadow-lg text-center">
+            <h2 class="text-2xl font-bold text-amber-900">{{ reservations|length }}</h2>
+            <p class="text-amber-700">Réservations</p>
+        </div>
+    </div>
+
+    {# Gestion des utilisateurs #}
+    <section class="mb-12">
+        <h2 class="text-3xl font-bold text-amber-900 mb-4">Gestion des Utilisateurs</h2>
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr>
+                    <th class="border-b p-2">Prénom</th>
+                    <th class="border-b p-2">Nom</th>
+                    <th class="border-b p-2">Email</th>
+                    <th class="border-b p-2">Rôle</th>
+                    <th class="border-b p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td class="border-b p-2">{{ user.firstName }}</td>
+                        <td class="border-b p-2">{{ user.lastName }}</td>
+                        <td class="border-b p-2">{{ user.email }}</td>
+                        <td class="border-b p-2">{{ user.roles|join(', ') }}</td>
+                        <td class="border-b p-2">
+                            <a href="#" class="text-blue-600 hover:underline">Modifier</a>
+                            |
+                            <a href="#" class="text-red-600 hover:underline">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center p-4">Aucun utilisateur enregistré.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    {# Gestion des plats #}
+    <section>
+        <h2 class="text-3xl font-bold text-amber-900 mb-4">Gestion des Plats</h2>
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr>
+                    <th class="border-b p-2">Nom du Plat</th>
+                    <th class="border-b p-2">Prix</th>
+                    <th class="border-b p-2">Catégorie</th>
+                    <th class="border-b p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plat in plats %}
+                    <tr>
+                        <td class="border-b p-2">{{ plat.name }}</td>
+                        <td class="border-b p-2">{{ plat.price }} €</td>
+                        <td class="border-b p-2">{{ plat.category.name }}</td>
+                        <td class="border-b p-2">
+                            <a href="#" class="text-blue-600 hover:underline">Modifier</a>
+                            |
+                            <a href="#" class="text-red-600 hover:underline">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center p-4">Aucun plat disponible.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+        {# Gestion des réservations #}
+    <section>
+        <h2 class="text-3xl font-bold text-amber-900 mb-4">Gestion des Réservations</h2>
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr>
+                    <th class="border-b p-2">Date</th>
+                    <th class="border-b p-2">Client</th>
+                    <th class="border-b p-2">Table</th>
+                    <th class="border-b p-2">Statut</th>
+                    <th class="border-b p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td class="border-b p-2">{{ reservation.date|date('d/m/Y H:i') }}</td>
+                        <td class="border-b p-2">{{ reservation.userId.firstName }} {{ reservation.userId.lastName }}</td>
+                        <td class="border-b p-2">
+                            {% if reservation.tableId %}
+                                Table {{ reservation.tableId.id }}
+                            {% else %}
+                                Non assignée
+                            {% endif %}
+                        </td>
+                        <td class="border-b p-2">
+                            {% if reservation.status == 0 %}
+                                <span class="text-yellow-600">En attente</span>
+                            {% elseif reservation.status == 1 %}
+                                <span class="text-green-600">Confirmée</span>
+                            {% else %}
+                                <span class="text-red-600">Annulée</span>
+                            {% endif %}
+                        </td>
+                        <td class="border-b p-2">
+                            <a href="#" class="text-blue-600 hover:underline">Modifier</a>
+                            |
+                            <a href="#" class="text-red-600 hover:underline" onclick="return confirm('Confirmer la suppression ?');">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center p-4">Aucune réservation enregistrée.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+</div>
+{% endblock %}

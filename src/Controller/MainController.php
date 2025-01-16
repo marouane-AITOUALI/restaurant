@@ -25,4 +25,9 @@ class MainController extends AbstractController
     {
         return $this->render('Registration/connexion.html.twig');
     }
+    #[Route('/A-propos', name: 'a_propos')]
+    public function menu(): Response
+    {
+        return $this->render('about/propos.html.twig');
+    }
 } 

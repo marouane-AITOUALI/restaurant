@@ -28,11 +28,15 @@
                 </div>
             </div>
 
+            <div>
+                <a href={{ path('app_admin') }} class="text-sm font-semibold hover:text-amber-200 transition">Dashboard</a>
+            </div>
+
                 {# Navigation Links - Desktop #}
                 <div class="hidden md:flex space-x-8">
                     <a href="/" class="text-sm font-semibold hover:text-amber-200 transition">Accueil</a>
-                    <a href="#" class="text-sm font-semibold hover:text-amber-200 transition">Menu</a>
-                    <a href="#" class="text-sm font-semibold hover:text-amber-200 transition">À propos</a>
+                    <a href={{ path('app_menu') }} class="text-sm font-semibold hover:text-amber-200 transition">Menu</a>
+                    <a href={{ path('a_propos') }} class="text-sm font-semibold hover:text-amber-200 transition">À propos</a>
                     <a href="#" class="text-sm font-semibold hover:text-amber-200 transition">Contact</a>
                 </div>
 

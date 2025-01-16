@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Menus{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center text-big-stone mb-10">🌿 Découvrez Nos Menus 🌿</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for menu in menus %}
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105">
+                <div class="bg-gradient-to-r from-robin's-egg-blue to-big-stone p-4">
+                    <h2 class="text-2xl font-semibold text-black">{{ menu.name }}</h2>
+                </div>
+
+                <div class="p-6">
+                    {% set totalPrice = 0 %}
+                    
+                    {% for plat in menu.plats %}
+                        {% set totalPrice = totalPrice + plat.price %}
+                        
+                        <div class="mb-4">
+                            <h3 class="text-xl font-medium text-gray-800">{{ plat.name }}</h3>
+                            <p class="text-sm text-gray-500 italic">{{ plat.category.name }}</p>
+                            <ul class="list-disc list-inside text-gray-600">
+                                {% for ingredient in plat.ingredients %}
+                                    <li>{{ ingredient.name }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p class="text-right text-robin's-egg-blue font-bold">{{ plat.price }}€</p>
+                            
+                            <!-- Flèche menant à la page de détails du plat -->
+                            <div class="mt-2 text-right">
+                                <a href="{{ path('plat_detail', {'id': plat.id}) }}" class="text-robin's-egg-blue font-bold">
+                                    ➡️ Voir les commentaires et ajouter un commentaire
+                                </a>
+                            </div>
+                        </div>
+
+                        <hr class="my-3 border-dashed">
+                    {% endfor %}
+
+                    <div class="mt-4 text-center">
+                        <span class="inline-block bg-big-stone text-black text-lg font-semibold py-2 px-4 rounded-lg">
+                            💰 Prix Total : {{ totalPrice }}€
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

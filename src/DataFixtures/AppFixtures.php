@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Categorie;
 use App\Entity\Category;
 use App\Entity\Plat;
 use App\Entity\Ingredient;
@@ -32,12 +31,12 @@ class AppFixtures extends Fixture
         $userObjects = [];
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
-            $user->setFirstName("firstname$i");
-            $user->setLastName("lastname$i");
-            $user->setEmail("user$i@example.com");
-            $user->setPassword("password");
-            $user->setRoles(["ROLE_USER"]);
-            $user->setEstArchive(0);
+            $user->setFirstName("firstname$i")
+                 ->setLastName("lastname$i")
+                 ->setEmail("user$i@example.com")
+                 ->setPassword($this->passwordEncoder->hashPassword($user, "password"))
+                 ->setRoles(["ROLE_USER"])
+                 ->setEstArchive(0);
             $manager->persist($user);
             $userObjects[] = $user;
         }
@@ -54,29 +53,30 @@ class AppFixtures extends Fixture
 
         // Créer des plats avec ingrédients et commentaires
         $platObjects = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $plat = new Plat();
-            $plat->setName("Plat $i");
-            $plat->setPrice(rand(10, 50));
-            $plat->setDescription("Description for Plat $i");
-            $plat->setIsDailySpecial(rand(0, 1));
-            $plat->setPays(['Maroc', 'Algerie', 'Tunisie'][array_rand(['Maroc', 'Algerie', 'Tunisie'])]);
-            $plat->setCategory($categorieObjects[array_rand($categorieObjects)]);
+            $plat->setName("Plat $i")
+                 ->setPrice(rand(10, 50))
+                 ->setDescription("Description for Plat $i")
+                 ->setIsDailySpecial(rand(0, 1))
+                 ->setPays(['Maroc', 'Algerie', 'Tunisie'][array_rand(['Maroc', 'Algerie', 'Tunisie'])])
+                 ->setCategory($categorieObjects[array_rand($categorieObjects)]);
 
             // Ajouter des ingrédients
-            for ($j = 1; $j < 4; $j++) {
+            for ($j = 1; $j <= 3; $j++) {
                 $ingredient = new Ingredient();
-                $ingredient->setName("Ingredient $j for Plat $i");
-                $ingredient->setPlat($plat);
+                $ingredient->setName("Ingredient $j for Plat $i")
+                          ->setPlat($plat);
                 $manager->persist($ingredient);
             }
 
             // Ajouter des commentaires
             for ($k = 0; $k < 2; $k++) {
                 $commentaire = new Commentaire();
-                $commentaire->setComment("Commentaire $k for Plat $i");
-                $commentaire->setUserId($userObjects[array_rand($userObjects)]);
-                $commentaire->setPlat($plat);
+                $commentaire->setComment("Commentaire $k for Plat $i")
+                            ->setUserId($userObjects[array_rand($userObjects)])
+                            ->setPlat($plat)
+                            ->setRating(rand(3, 5));
                 $manager->persist($commentaire);
             }
 
@@ -97,49 +97,61 @@ class AppFixtures extends Fixture
         // Créer des promotions
         for ($p = 0; $p < 2; $p++) {
             $promotion = new Promotion();
-            $promotion->setPlat($platObjects[array_rand($platObjects)]);
-            $promotion->setDateDebut(new \DateTime('+'.rand(1, 30).' days'));
-            $promotion->setDateFin(new \DateTime('+'.rand(31, 60).' days'));
-            $promotion->setPourcentage(rand(10, 30));
+            $promotion->setPlat($platObjects[array_rand($platObjects)])
+                      ->setDateDebut(new \DateTime('+'.rand(1, 30).' days'))
+                      ->setDateFin(new \DateTime('+'.rand(31, 60).' days'))
+                      ->setPourcentage(rand(10, 30));
             $manager->persist($promotion);
         }
 
         // Créer des tables
+        $tableObjects = [];
         for ($t = 1; $t <= 5; $t++) {
             $table = new Table();
-            $table->setNumero($t);
-            $table->setCapacite(rand(2, 6));
-            $table->setEstReserve(0);
+            $table->setNumero($t)
+                  ->setCapacite(rand(2, 6))
+                  ->setEstReserve(0);
             $manager->persist($table);
+            $tableObjects[] = $table;
+        }
+
+        // Créer des réservations
+        for ($r = 0; $r < 5; $r++) {
+            $reservation = new Reservation();
+            $reservation->setUserId($userObjects[array_rand($userObjects)])
+                        ->setTableId($tableObjects[array_rand($tableObjects)])
+                        ->setDate(new \DateTime('+'.rand(1, 15).' days'))
+                        ->setStatus(rand(0, 2));
+            $manager->persist($reservation);
         }
 
         // Créer des événements
         for ($e = 0; $e < 2; $e++) {
             $evenement = new Event();
-            $evenement->setName("Evenement $e");
-            $evenement->setDescription("Description for Evenement $e");
-            $evenement->setDate(new \DateTime('+'.rand(1, 30).' days'));
+            $evenement->setName("Evenement $e")
+                      ->setDescription("Description for Evenement $e")
+                      ->setDate(new \DateTime('+'.rand(1, 30).' days'));
             $manager->persist($evenement);
         }
 
-        // Créer un administrateur
+        // Administrateur
         $admin = new User();
-        $admin->setFirstName('adminFirstName');
-        $admin->setLastName('adminLastName');
-        $admin->setEmail('admin@example.com');
-        $admin->setPassword("password");
-        $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setEstArchive(0);
+        $admin->setFirstName('adminFirstName')
+              ->setLastName('adminLastName')
+              ->setEmail('admin@example.com')
+              ->setPassword($this->passwordEncoder->hashPassword($admin, 'password'))
+              ->setRoles(['ROLE_ADMIN'])
+              ->setEstArchive(0);
         $manager->persist($admin);
 
-        // Créer un administrateur
+        // Utilisateur banni
         $ban = new User();
-        $ban->setFirstName('banFirstName');
-        $ban->setLastName('banLastName');
-        $ban->setEmail('ban@example.com');
-        $ban->setPassword("password");
-        $ban->setRoles(['ROLE_BANNED']);
-        $ban->setEstArchive(0);
+        $ban->setFirstName('banFirstName')
+             ->setLastName('banLastName')
+             ->setEmail('ban@example.com')
+             ->setPassword($this->passwordEncoder->hashPassword($ban, 'password'))
+             ->setRoles(['ROLE_BANNED'])
+             ->setEstArchive(0);
         $manager->persist($ban);
 
         $manager->flush();
