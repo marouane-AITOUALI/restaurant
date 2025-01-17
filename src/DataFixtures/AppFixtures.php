@@ -133,7 +133,8 @@ class AppFixtures extends Fixture
             $evenement->setName("Evenement $e")
                       ->setDescription("Description for Evenement $e")
                       ->setDate(new \DateTime('+'.rand(1, 30).' days'))
-                      ->setPrice(mt_rand(1000, 5000) / 100);
+                      ->setPrice(mt_rand(1000, 5000) / 100)
+                      ->setPathImageEvent('./assets/images/events/koulMaghreb_event1.jpg');
             $manager->persist($evenement);
         }
 

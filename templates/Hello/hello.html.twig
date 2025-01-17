@@ -151,29 +151,30 @@
                 <p class="text-gray-600">Vivez des moments inoubliables</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
-                    <img src="{{ asset('images/qaada.jpg') }}" alt="Qaâda Chaâbi" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-amber-900">Qaâda Chaâbi Algérois</h3>
-                            <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
-                                25 Mars
-                            </span>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            Soirée musicale authentique avec notre orchestre traditionnel.
-                            Au programme : musique chaâbi, thé à la menthe et pâtisseries.
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-amber-600 font-semibold">29.90 € / personne</span>
-                            <button class="px-4 py-2 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors duration-300">
-                                Réserver
-                            </button>
+                {% for event in events %}
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                        <img src="{{ asset(event.pathImageEvent) }}" alt="{{ event.name }}" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-amber-900">{{ event.name }}</h3>
+                                <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
+                                    {{ event.date|date('d M') }}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 mb-4">{{ event.description }}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-600 font-semibold">{{ event.price }} € / personne</span>
+                                <a href="{{ path('event_reserve', {id: event.id}) }}" class="px-4 py-2 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors duration-300">
+                                    Réserver
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Ajoutez d'autres événements ici -->
+                {% else %}
+                    <p>Aucun événement à venir.</p>
+                {% endfor %}
             </div>
+
         </div>
     </section>
 

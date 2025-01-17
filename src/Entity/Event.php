@@ -26,6 +26,9 @@ class Event
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pathImageEvent = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Event
     public function setPrice(string $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPathImageEvent(): ?string
+    {
+        return $this->pathImageEvent;
+    }
+
+    public function setPathImageEvent(?string $pathImageEvent): static
+    {
+        $this->pathImageEvent = $pathImageEvent;
 
         return $this;
     }
