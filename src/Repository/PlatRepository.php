@@ -16,6 +16,14 @@ class PlatRepository extends ServiceEntityRepository
         parent::__construct($registry, Plat::class);
     }
 
+    public function getDailySpecial(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.is_daily_special = 1')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Plat[] Returns an array of Plat objects
     //     */

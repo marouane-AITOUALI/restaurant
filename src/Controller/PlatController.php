@@ -19,4 +19,13 @@ final class PlatController extends AbstractController
             'comments' => $comments,
         ]);
     }
+
+    #[Route('/specialites', name: 'app_specialites')]
+    public function specialites(PlatRepository $platRepository): Response
+    {
+        $platsSpecial = $platRepository->getDailySpecial();
+        return $this->render('plat/specialites.html.twig', [
+            'platSpecial' => $platsSpecial,
+        ]);
+    }
 }
