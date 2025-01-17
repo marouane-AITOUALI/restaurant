@@ -19,17 +19,15 @@
                     {# Vérifier si le plat a une promotion active #}
                     {% set promo = null %}
                     {% for p in plat.promotions %}
-                        {% if p.date_debut <= date() and (p.datefin >= date() or p.datefin is null) %}
-                            {% set promo = p %}
-                        {% endif %}
+                        {% set promo = p %}
                     {% endfor %}
 
                     {% if promo %}
                         {% set discountedPrice = plat.price - (plat.price * promo.pourcentage / 100) %}
-                        <p class="text-2xl font-bold text-amber-200">
+                        <p class="text-2xl font-bold text-amber-900">
                             {{ discountedPrice|number_format(2, '.', ',') }} €
                         </p>
-                        <p class="text-sm text-amber-100/60 line-through">
+                        <p class="text-sm text-amber-900/60">
                             Au lieu de {{ plat.price|number_format(2, '.', ',') }} €
                         </p>
                     {% else %}

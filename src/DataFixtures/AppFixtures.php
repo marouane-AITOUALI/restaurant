@@ -56,7 +56,7 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 10; $i++) {
             $plat = new Plat();
             $plat->setName("Plat $i")
-                 ->setPrice(rand(10, 50))
+                 ->setPrice(mt_rand(1000, 5000) / 100)
                  ->setDescription("Description for Plat $i")
                  ->setIsDailySpecial(rand(0, 1))
                  ->setPays(['Maroc', 'Algerie', 'Tunisie'][array_rand(['Maroc', 'Algerie', 'Tunisie'])])
@@ -87,7 +87,8 @@ class AppFixtures extends Fixture
         // Créer des menus avec des plats
         for ($m = 0; $m < 3; $m++) {
             $menu = new Menu();
-            $menu->setName("Menu $m");
+            $menu->setName("Menu $m")
+                 ->setNombrePersonne(rand(2, 6));
             for ($p = 0; $p < 3; $p++) {
                 $menu->addPlat($platObjects[array_rand($platObjects)]);
             }
@@ -121,7 +122,8 @@ class AppFixtures extends Fixture
             $reservation->setUserId($userObjects[array_rand($userObjects)])
                         ->setTableId($tableObjects[array_rand($tableObjects)])
                         ->setDate(new \DateTime('+'.rand(1, 15).' days'))
-                        ->setStatus(rand(0, 2));
+                        ->setStatus(rand(0, 2))
+                        ->setIsEvent(rand(0, 1));
             $manager->persist($reservation);
         }
 
@@ -130,7 +132,8 @@ class AppFixtures extends Fixture
             $evenement = new Event();
             $evenement->setName("Evenement $e")
                       ->setDescription("Description for Evenement $e")
-                      ->setDate(new \DateTime('+'.rand(1, 30).' days'));
+                      ->setDate(new \DateTime('+'.rand(1, 30).' days'))
+                      ->setPrice(mt_rand(1000, 5000) / 100);
             $manager->persist($evenement);
         }
 

@@ -30,6 +30,9 @@ class Menu
     #[ORM\OneToMany(targetEntity: Promotion::class, mappedBy: 'menu')]
     private Collection $promotions;
 
+    #[ORM\Column]
+    private ?int $nombrePersonne = null;
+
     public function __construct()
     {
         $this->plats = new ArrayCollection();
@@ -110,6 +113,18 @@ class Menu
                 $promotion->setMenu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNombrePersonne(): ?int
+    {
+        return $this->nombrePersonne;
+    }
+
+    public function setNombrePersonne(int $nombrePersonne): static
+    {
+        $this->nombrePersonne = $nombrePersonne;
 
         return $this;
     }

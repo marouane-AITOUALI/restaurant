@@ -27,6 +27,9 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user_id = null;
 
+    #[ORM\Column]
+    private ?int $isEvent = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Reservation
     public function setUserId(?User $user_id): static
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getIsEvent(): ?int
+    {
+        return $this->isEvent;
+    }
+
+    public function setIsEvent(int $isEvent): static
+    {
+        $this->isEvent = $isEvent;
 
         return $this;
     }
