@@ -110,7 +110,7 @@
                         <td class="border-b p-2">{{ reservation.userId.firstName }} {{ reservation.userId.lastName }}</td>
                         <td class="border-b p-2">
                             {% if reservation.tableId %}
-                                Table {{ reservation.tableId.id }}
+                                Table {{ reservation.tableId.numero }}
                             {% else %}
                                 Non assignée
                             {% endif %}
