@@ -5,12 +5,14 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     #[ORM\Id]
@@ -25,7 +27,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private ?string $password = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ["ROLE_USER"];
 
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
@@ -34,7 +36,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private ?string $lastName = null;
 
     #[ORM\Column]
-    private ?int $est_archive = null;
+    private ?int $est_archive = 0;
 
     /**
      * @var Collection<int, Reservation>
@@ -47,6 +49,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
      */
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'user_id')]
     private Collection $commentaires;
+
+    #[ORM\Column]
+    private bool $isVerified = false;
 
     public function __construct()
     {
@@ -199,6 +204,18 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
                 $commentaire->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

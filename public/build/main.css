@@ -1304,6 +1304,10 @@ video {
   color: rgb(120 53 15 / var(--tw-text-opacity, 1));
 }
 
+.text-amber-900\/60 {
+  color: rgb(120 53 15 / 0.6);
+}
+
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
@@ -1362,14 +1366,6 @@ video {
 .text-yellow-600 {
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity, 1));
-}
-
-.text-amber-900\/60 {
-  color: rgb(120 53 15 / 0.6);
-}
-
-.line-through {
-  text-decoration-line: line-through;
 }
 
 .placeholder-gray-400::-moz-placeholder {

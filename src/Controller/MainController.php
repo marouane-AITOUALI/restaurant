@@ -17,12 +17,7 @@ class MainController extends AbstractController
             'events' => $events,
         ]);
     }
-    #[Route('/register', name: 'app_register')]
-    public function register(): Response
-    {
-        return $this->render('Registration/inscription.html.twig');
-    }
-
+    
     #[Route('/A-propos', name: 'a_propos')]
     public function menu(): Response
     {
