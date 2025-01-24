@@ -11,9 +11,11 @@
                 <thead class="bg-amber-700 text-white">
                     <tr>
                         <th class="p-4 text-left">Date</th>
+                        <th class="p-4 text-left">Heure</th>
                         <th class="p-4 text-left">Nom</th>
                         <th class="p-4 text-left">Table</th>
                         <th class="p-4 text-left">Nombre de personnes</th>
+                        <th class="p-4 text-left">Notes</th>
                         <th class="p-4 text-left">Actions</th>
                     </tr>
                 </thead>
@@ -21,16 +23,17 @@
                     {% for reservation in reservations %}
                         <tr class="hover:bg-amber-100">
                             <td class="p-4">{{ reservation.date|date('d/m/Y') }}</td>
-                            <td class="border-b p-2">{{ reservation.userId.firstName }} {{ reservation.userId.lastName }}</td>
+                            <td class="p-4">{{ reservation.date|date('H:i') }}</td>
+                            <td class="p-4">{{ reservation.userId.firstName }} {{ reservation.userId.lastName }}</td>
                             <td class="p-4">
                                 {% if reservation.tableId %}
-                                Table {{ reservation.tableId.numero }}
+                                    Table {{ reservation.tableId.numero }}
                                 {% else %}
                                     Non assignée
                                 {% endif %}
                             </td>
-                            </td>
-                            <td class="p-4">{{ reservation.tableId.numero }}</td>
+                            <td class="p-4">{{ reservation.numberOfPeople }}</td>
+                            <td class="p-4">{{ reservation.notes }}</td>
                             <td class="p-4">
                                 <a href="#" class="text-blue-600 hover:underline">Modifier</a> |
                                 <a href="#" class="text-red-600 hover:underline">Annuler</a>

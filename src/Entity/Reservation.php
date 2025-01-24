@@ -30,6 +30,15 @@ class Reservation
     #[ORM\Column]
     private ?int $isEvent = null;
 
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $phone = null; // Nouveau champ pour le téléphone
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $number_of_people = null; // Nouveau champ pour le nombre de personnes
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $notes = null; // Nouveau champ pour les notes
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,7 +52,6 @@ class Reservation
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -55,7 +63,6 @@ class Reservation
     public function setStatus(int $status): static
     {
         $this->status = $status;
-
         return $this;
     }
 
@@ -67,7 +74,6 @@ class Reservation
     public function setTableId(?Table $table_id): static
     {
         $this->table_id = $table_id;
-
         return $this;
     }
 
@@ -79,7 +85,6 @@ class Reservation
     public function setUserId(?User $user_id): static
     {
         $this->user_id = $user_id;
-
         return $this;
     }
 
@@ -91,7 +96,39 @@ class Reservation
     public function setIsEvent(int $isEvent): static
     {
         $this->isEvent = $isEvent;
+        return $this;
+    }
 
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    public function getNumberOfPeople(): ?int
+    {
+        return $this->number_of_people;
+    }
+
+    public function setNumberOfPeople(?int $number_of_people): static
+    {
+        $this->number_of_people = $number_of_people;
+        return $this;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes): static
+    {
+        $this->notes = $notes;
         return $this;
     }
 }

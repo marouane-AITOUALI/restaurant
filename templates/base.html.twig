@@ -52,11 +52,11 @@
                 {% if app.user %}
                     <div class="hidden md:flex space-x-4 items-center">
                         <span class="text-sm font-semibold capitalize">{{ app.user.lastName|upper }} {{ app.user.firstName }}</span>
-                        <a href="{{ path('app_logout') }}" class="px-4 py-2 text-sm font-medium bg-amber-300 text-amber-900 rounded-lg hover:bg-amber-400 transition">Déconnexion</a>
+                        <a href={{ path('app_logout') }} class="px-4 py-2 text-sm font-medium bg-amber-300 text-amber-900 rounded-lg hover:bg-amber-400 transition">Déconnexion</a>
                     </div>
                 {% else %}
                     <div class="hidden md:flex space-x-4">
-                        <a href="/login" class="px-4 py-2 text-sm font-medium border border-amber-300 rounded-lg hover:bg-amber-200 hover:text-amber-900 transition">Connexion</a>
+                        <a href={{ path('app_login')}} class="px-4 py-2 text-sm font-medium border border-amber-300 rounded-lg hover:bg-amber-200 hover:text-amber-900 transition">Connexion</a>
                         <a href={{ path('app_register')}} class="px-4 py-2 text-sm font-medium bg-amber-300 text-amber-900 rounded-lg hover:bg-amber-400 transition">Inscription</a>
                     </div>
                 {% endif %}
@@ -79,8 +79,8 @@
                 <a href="/menu" class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">Menu</a>
                 <a href="#" class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">À propos</a>
                 <a href="#" class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">Contact</a>
-                <a href="/login" class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">Connexion</a>
-                <a href="/register" class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">Inscription</a>
+                <a href=href={{ path('app_login')}} class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">Connexion</a>
+                <a href=href={{ path('app_register')}} class="block text-sm font-semibold text-white hover:bg-amber-600 px-3 py-2 rounded-lg">Inscription</a>
             </div>
         </div>
     </nav>
