@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Promotion{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-6">Edit Promotion</h1>
+
+        <div class="mb-4">
+            {{ include('promotion/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+
+        <div class="flex justify-between items-center mt-6">
+            <a href="{{ path('app_promotion_index') }}" class="text-amber-500 hover:text-amber-600 font-medium">Back to list</a>
+            {{ include('promotion/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

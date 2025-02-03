@@ -1,0 +1,17 @@
+{{ form_start(form, { 'attr': { 'class': 'space-y-4' } }) }}
+    {# Ajout d'une classe Tailwind pour le conteneur des champs du formulaire #}
+    <div class="grid grid-cols-1 gap-y-6">
+        {{ form_widget(form, {
+            'attr': {
+                'class': 'block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500'
+            }
+        }) }}
+    </div>
+
+    {# Bouton stylisé #}
+    <button 
+        type="submit" 
+        class="inline-flex justify-center items-center px-4 py-2 text-white bg-amber-600 border border-transparent rounded-lg shadow-sm text-sm font-medium hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+{{ form_end(form) }}
