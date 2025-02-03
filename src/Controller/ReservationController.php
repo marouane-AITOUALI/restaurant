@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Reservation;
 final class ReservationController extends AbstractController
 {
-    #[Route('/reservations', name: 'app_reservations')]
+    #[Route('/reservations', name: 'app_reservations_user')]
     public function index(ReservationRepository $reservationRepository): Response
     {
         $user = $this->getUser();

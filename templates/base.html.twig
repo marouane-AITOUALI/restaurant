@@ -44,7 +44,7 @@
                 </div>
                 {% if app.user and 'ROLE_BANNED' not in app.user.roles %}
                     <div class="hidden md:flex space-x-4 items-center">
-                        <a href="{{ path('app_reservations') }}" class="px-4 py-2 text-sm font-medium bg-amber-300 text-amber-900 rounded-lg hover:bg-amber-400 transition">Mes réservations</a>
+                        <a href="{{ path('app_reservations_user') }}" class="px-4 py-2 text-sm font-medium bg-amber-300 text-amber-900 rounded-lg hover:bg-amber-400 transition">Mes réservations</a>
                     </div>
                 {% endif %}
                 

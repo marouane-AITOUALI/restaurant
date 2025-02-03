@@ -43,7 +43,7 @@
                     {# Image de l'événement #}
                     <div class="relative h-48 overflow-hidden">
                         {% if event.pathImageEvent %}
-                            <img src="{{ asset('uploads/events/' ~ event.pathImageEvent) }}" 
+                            <img src="{{ asset(event.pathImageEvent) }}" 
                                  alt="{{ event.name }}"
                                  class="w-full h-full object-cover">
                         {% else %}
@@ -53,9 +53,7 @@
                                 </svg>
                             </div>
                         {% endif %}
-                        <div class="absolute top-0 right-0 p-2 bg-amber-500 text-white rounded-bl-lg">
-                            {{ event.price|number_format(2, ',', ' ') }} €
-                        </div>
+                        
                     </div>
 
                     {# Contenu de l'événement #}
@@ -87,6 +85,9 @@
                                 </svg>
                                 Modifier
                             </a>
+                            <div class="absolute text-right right-0 p-2 bg-amber-500 text-black rounded-bl-lg">
+                                {{ event.price|number_format(2, ',', ' ') }} €
+                            </div>
                         </div>
                     </div>
                 </div>

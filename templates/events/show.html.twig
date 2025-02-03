@@ -23,7 +23,7 @@
     {# Image de l'événement avec overlay #}
     {% if event.pathImageEvent %}
         <div class="relative h-96 overflow-hidden">
-            <img src="{{ asset('uploads/events/' ~ event.pathImageEvent) }}" 
+            <img src="{{ asset(event.pathImageEvent) }}"
                  alt="{{ event.name }}"
                  class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
