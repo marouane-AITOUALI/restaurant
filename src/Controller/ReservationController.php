@@ -56,7 +56,7 @@ final class ReservationController extends AbstractController
         $em->flush();
 
         // Retourner une réponse, ici une redirection vers la page des réservations
-        return $this->redirectToRoute('app_reservations');
+        return $this->redirectToRoute('app_reservations_user');
     }
 
     public function manageReservationByAdmin(ReservationRepository $reservationRepository, $id_reservation, $etat): Response
