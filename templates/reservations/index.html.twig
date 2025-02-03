@@ -11,11 +11,12 @@
                 <thead class="bg-amber-500 text-black">
                     <tr>
                         <th class="px-6 py-3 text-left text-sm font-semibold">Id</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Nom</th>
                         <th class="px-6 py-3 text-left text-sm font-semibold">Date</th>
                         <th class="px-6 py-3 text-left text-sm font-semibold">Status</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold">Is Event</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Evenement</th>
                         <th class="px-6 py-3 text-left text-sm font-semibold">Phone</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold">Number of People</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Nombre de personnes</th>
                         <th class="px-6 py-3 text-left text-sm font-semibold">Notes</th>
                         <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
                     </tr>
@@ -24,9 +25,12 @@
                 {% for reservation in reservations %}
                     <tr class="hover:bg-gray-100">
                         <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.id }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.userId.firstName }} {{ reservation.userId.lastName }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.date ? reservation.date|date('Y-m-d H:i:s') : '' }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.status }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.isEvent ? 'Yes' : 'No' }}</td>
+<td class="px-6 py-4 text-sm text-gray-700">
+    {{ reservation.status == 0 ? '🟡 En attente' : (reservation.status == 1 ? '🟢 Confirmée' : '🔴 Refusée') }}
+</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.isEvent ? 'Oui' : 'Non' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.phone }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.numberOfPeople }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ reservation.notes }}</td>
