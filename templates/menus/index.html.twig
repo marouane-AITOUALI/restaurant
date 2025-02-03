@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Menus{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6">
+        {# En-tête avec actions #}
+        <div class="sm:flex sm:items-center sm:justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-amber-900">Menus</h1>
+                <p class="mt-2 text-sm text-gray-600">
+                    Gérez les menus disponibles dans votre restaurant
+                </p>
+            </div>
+            <div class="mt-4 sm:mt-0">
+                <a href="{{ path('app_menus_new') }}" 
+                   class="inline-flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-700 
+                          text-white rounded-lg shadow-sm transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Nouveau menu
+                </a>
+            </div>
+        </div>
+
+        {# Messages flash #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded-lg {% if label == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}"
+                     x-data="{ show: true }" 
+                     x-show="show" 
+                     x-init="setTimeout(() => show = false, 3000)">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {# Liste des menus #}
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="min-w-full divide-y divide-gray-200">
+                {# En-tête du tableau #}
+                <div class="bg-gray-50">
+                    <div class="grid grid-cols-12 gap-4 px-6 py-3">
+                        <div class="col-span-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            ID
+                        </div>
+                        <div class="col-span-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nom du menu
+                        </div>
+                        <div class="col-span-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nombre de personnes
+                        </div>
+                        <div class="col-span-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions
+                        </div>
+                    </div>
+                </div>
+
+                {# Corps du tableau #}
+                <div class="bg-white divide-y divide-gray-200">
+                    {% for menu in menus %}
+                        <div class="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition duration-150">
+                            <div class="col-span-1 text-sm text-gray-900">
+                                {{ menu.id }}
+                            </div>
+                            <div class="col-span-5">
+                                <div class="text-sm font-medium text-gray-900">{{ menu.name }}</div>
+                            </div>
+                            <div class="col-span-3">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                                    {{ menu.nombrePersonne }} {% if menu.nombrePersonne > 1 %}personnes{% else %}personne{% endif %}
+                                </span>
+                            </div>
+                            <div class="col-span-3 text-right space-x-2">
+                                <a href="{{ path('app_menus_show', {'id': menu.id}) }}" 
+                                   class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Voir
+                                </a>
+                                <a href="{{ path('app_menus_edit', {'id': menu.id}) }}" 
+                                   class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                    </svg>
+                                    Modifier
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="px-6 py-4 text-center text-sm text-gray-500">
+                            <div class="flex flex-col items-center py-8">
+                                <svg class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                                <p class="mt-2">Aucun menu trouvé</p>
+                                <a href="{{ path('app_menus_new') }}" class="mt-4 text-amber-600 hover:text-amber-700">
+                                    Créer votre premier menu
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {# Pagination (si nécessaire) #}
+        {% if menus.haveToPaginate is defined and menus.haveToPaginate %}
+            <div class="mt-6">
+                <nav class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
+                    {# ... Code de pagination ... #}
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+{% endblock %}

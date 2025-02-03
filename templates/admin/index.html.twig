@@ -3,145 +3,77 @@
 {% block title %}Tableau de Bord - KoulMaghreb{% endblock %}
 
 {% block body %}
-<div class="container mx-auto px-6 py-12">
-    <h1 class="text-4xl font-bold text-amber-900 mb-8">Tableau de Bord Administrateur</h1>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-amber-900 mb-12 text-center">
+            <span class="border-b-4 border-amber-500 pb-2">Tableau de Bord Administrateur</span>
+        </h1>
 
-    {# Statistiques rapides #}
-    <div class="grid md:grid-cols-3 gap-6 mb-12">
-        <div class="bg-amber-100 p-6 rounded-lg shadow-lg text-center">
-            <h2 class="text-2xl font-bold text-amber-900">{{ users|length }}</h2>
-            <p class="text-amber-700">Utilisateurs enregistrés</p>
+        {# Statistiques rapides #}
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                <div class="text-4xl text-amber-600 mb-2">👥</div>
+                <h2 class="text-3xl font-bold text-amber-900 mb-2">{{ users|length }}</h2>
+                <p class="text-amber-700 font-medium">Utilisateurs enregistrés</p>
+            </div>
+            <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                <div class="text-4xl text-amber-600 mb-2">🍽️</div>
+                <h2 class="text-3xl font-bold text-amber-900 mb-2">{{ plats|length }}</h2>
+                <p class="text-amber-700 font-medium">Plats disponibles</p>
+            </div>
+            <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                <div class="text-4xl text-amber-600 mb-2">📅</div>
+                <h2 class="text-3xl font-bold text-amber-900 mb-2">{{ reservations|length }}</h2>
+                <p class="text-amber-700 font-medium">Réservations</p>
+            </div>
         </div>
-        <div class="bg-amber-100 p-6 rounded-lg shadow-lg text-center">
-            <h2 class="text-2xl font-bold text-amber-900">{{ plats|length }}</h2>
-            <p class="text-amber-700">Plats disponibles</p>
-        </div>
-        <div class="bg-amber-100 p-6 rounded-lg shadow-lg text-center">
-            <h2 class="text-2xl font-bold text-amber-900">{{ reservations|length }}</h2>
-            <p class="text-amber-700">Réservations</p>
+
+        {# Liens vers les pages CRUD #}
+        <div class="mb-12 bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-amber-900 mb-8 text-center">
+                <span class="border-b-4 border-amber-500 pb-2">Gestion des Entités</span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="{{ path('app_category_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">📁</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Catégories</span>
+                </a>
+                <a href="{{ path('app_commentaire_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">💬</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Commentaires</span>
+                </a>
+                <a href="{{ path('app_events_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🎉</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Événements</span>
+                </a>
+                <a href="{{ path('app_ingredient_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🧂</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Ingrédients</span>
+                </a>
+                <a href="{{ path('app_menus_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">📋</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Menus</span>
+                </a>
+                <a href="{{ path('app_plats_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🍲</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Plats</span>
+                </a>
+                <a href="{{ path('app_promotion_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🎁</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Promotions</span>
+                </a>
+                <a href="{{ path('app_reservations_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🗓️</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Réservations</span>
+                </a>
+                <a href="{{ path('app_table_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🍽️</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Tables</span>
+                </a>
+                <a href="{{ path('app_user_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                    <span class="text-2xl group-hover:scale-125 transition-transform duration-300">👤</span>
+                    <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Utilisateurs</span>
+                </a>
+            </div>
         </div>
     </div>
-
-    {# Gestion des utilisateurs #}
-    <section class="mb-12">
-        <h2 class="text-3xl font-bold text-amber-900 mb-4">Gestion des Utilisateurs</h2>
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr>
-                    <th class="border-b p-2">Prénom</th>
-                    <th class="border-b p-2">Nom</th>
-                    <th class="border-b p-2">Email</th>
-                    <th class="border-b p-2">Rôle</th>
-                    <th class="border-b p-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td class="border-b p-2">{{ user.firstName }}</td>
-                        <td class="border-b p-2">{{ user.lastName }}</td>
-                        <td class="border-b p-2">{{ user.email }}</td>
-                        <td class="border-b p-2">{{ user.roles|join(', ') }}</td>
-                        <td class="border-b p-2">
-                            <a href="#" class="text-blue-600 hover:underline">Modifier</a>
-                            |
-                            <a href="#" class="text-red-600 hover:underline">Supprimer</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center p-4">Aucun utilisateur enregistré.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    {# Gestion des plats #}
-    <section>
-        <h2 class="text-3xl font-bold text-amber-900 mb-4">Gestion des Plats</h2>
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr>
-                    <th class="border-b p-2">Nom du Plat</th>
-                    <th class="border-b p-2">Prix</th>
-                    <th class="border-b p-2">Catégorie</th>
-                    <th class="border-b p-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for plat in plats %}
-                    <tr>
-                        <td class="border-b p-2">{{ plat.name }}</td>
-                        <td class="border-b p-2">{{ plat.price }} €</td>
-                        <td class="border-b p-2">{{ plat.category.name }}</td>
-                        <td class="border-b p-2">
-                            <a href="#" class="text-blue-600 hover:underline">Modifier</a>
-                            |
-                            <a href="#" class="text-red-600 hover:underline">Supprimer</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center p-4">Aucun plat disponible.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    {# Gestion des réservations #}
-    <section>
-        <h2 class="text-3xl font-bold text-amber-900 mb-4">Gestion des Réservations</h2>
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr>
-                    <th class="border-b p-2">Date</th>
-                    <th class="border-b p-2">Client</th>
-                    <th class="border-b p-2">Table</th>
-                    <th class="border-b p-2">Nombre de personnes</th>
-                    <th class="border-b p-2">Notes</th>
-                    <th class="border-b p-2">Statut</th>
-                    <th class="border-b p-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for reservation in reservations %}
-                    <tr>
-                        <td class="border-b p-2">{{ reservation.date|date('d/m/Y H:i') }}</td>
-                        <td class="border-b p-2">{{ reservation.userId.firstName }} {{ reservation.userId.lastName }}</td>
-                        <td class="border-b p-2">
-                            {% if reservation.tableId %}
-                                Table {{ reservation.tableId.numero }}
-                            {% else %}
-                                Non assignée
-                            {% endif %}
-                        </td>
-                        <td class="border-b p-2">{{reservation.numberOfPeople}}</td>
-                        <td class="border-b p-2">{{reservation.notes is not empty ? reservation.notes : 'N/A'}}</td>
-                        <td class="border-b p-2">
-                            {% if reservation.status == 0 %}
-                                <span class="text-yellow-600">En attente</span>
-                            {% elseif reservation.status == 1 %}
-                                <span class="text-green-600">Confirmée</span>
-                            {% else %}
-                                <span class="text-red-600">Annulée</span>
-                            {% endif %}
-                        </td>
-                        <td class="border-b p-2">
-                            <a href="{{ path('reservation_manage', {id: reservation.id, etat: 1}) }}" class="text-green-600 hover:underline">Accepter</a> |
-                            <a href="{{ path('reservation_manage', {id: reservation.id, etat: 2}) }}" class="text-red-600 hover:underline">Rejeter</a> |
-                            <a href="{{ path('reservation_manage', {id: reservation.id, etat:0}) }}" class="text-yellow-600 hover:underline">En attente</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5" class="text-center p-4">Aucune réservation enregistrée.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-</div>
 {% endblock %}

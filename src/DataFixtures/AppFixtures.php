@@ -27,21 +27,21 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Créer des utilisateurs
+        // Création des utilisateurs
         $userObjects = [];
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
-            $user->setFirstName("firstname$i")
-                 ->setLastName("lastname$i")
-                 ->setEmail("user$i@example.com")
-                 ->setPassword($this->passwordEncoder->hashPassword($user, "password"))
-                 ->setRoles(["ROLE_USER"])
-                 ->setEstArchive(0);
+            $user->setFirstName("Prénom$i")
+                ->setLastName("Nom$i")
+                ->setEmail("user$i@example.com")
+                ->setPassword($this->passwordEncoder->hashPassword($user, "password"))
+                ->setRoles(["ROLE_USER"])
+                ->setEstArchive(0);
             $manager->persist($user);
             $userObjects[] = $user;
         }
 
-        // Créer des catégories
+        // Création des catégories
         $categories = ['Entrée', 'Plat Principal', 'Dessert', 'Boisson'];
         $categorieObjects = [];
         foreach ($categories as $catName) {
@@ -51,32 +51,47 @@ class AppFixtures extends Fixture
             $categorieObjects[] = $categorie;
         }
 
-        // Créer des plats avec ingrédients et commentaires
-        $platObjects = [];
-        for ($i = 1; $i <= 10; $i++) {
-            $plat = new Plat();
-            $plat->setName("Plat $i")
-                 ->setPrice(mt_rand(1000, 5000) / 100)
-                 ->setDescription("Description for Plat $i")
-                 ->setIsDailySpecial(rand(0, 1))
-                 ->setPays(['Maroc', 'Algerie', 'Tunisie'][array_rand(['Maroc', 'Algerie', 'Tunisie'])])
-                 ->setCategory($categorieObjects[array_rand($categorieObjects)]);
+        // Liste des plats et ingrédients
+        $platsData = [
+            ["Couscous Royal", ["Semoule", "Agneau", "Merguez", "Pois chiches", "Légumes"]],
+            ["Tajine de Poulet aux Olives", ["Poulet", "Olives vertes", "Citron confit", "Oignon", "Épices"]],
+            ["Chorba Frik", ["Agneau", "Frik (blé concassé)", "Tomates", "Pois chiches", "Coriandre"]],
+            ["Brik à l’Œuf", ["Feuille de brick", "Œuf", "Thon", "Persil", "Câpres"]],
+            ["Rfissa", ["Trid (galette)", "Poulet", "Lentilles", "Fenugrec", "Épices"]],
+            ["Loubia (Haricots Blancs)", ["Haricots blancs", "Tomates", "Ail", "Cumin", "Viande"]],
+            ["Méchoui", ["Épaule d’agneau", "Ail", "Beurre", "Ras el hanout", "Sel"]],
+            ["Makroud", ["Semoule", "Dattes", "Miel", "Beurre", "Fleur d’oranger"]],
+            ["Zlabia", ["Farine", "Sucre", "Safran", "Eau de rose", "Levure"]],
+            ["Thé à la Menthe", ["Thé vert", "Menthe fraîche", "Sucre", "Eau", "Fleur d’oranger"]],
+        ];
 
-            // Ajouter des ingrédients
-            for ($j = 1; $j <= 3; $j++) {
+        // Création des plats avec ingrédients
+        $platObjects = [];
+        foreach ($platsData as $platData) {
+            [$nomPlat, $ingredients] = $platData;
+
+            $plat = new Plat();
+            $plat->setName($nomPlat)
+                ->setPrice(mt_rand(1000, 5000) / 100)
+                ->setDescription("Un délicieux $nomPlat préparé selon la tradition.")
+                ->setIsDailySpecial(rand(0, 1))
+                ->setPays(['Maroc', 'Algerie', 'Tunisie'][array_rand(['Maroc', 'Algerie', 'Tunisie'])])
+                ->setCategory($categorieObjects[array_rand($categorieObjects)]);
+
+            foreach ($ingredients as $ingredientName) {
                 $ingredient = new Ingredient();
-                $ingredient->setName("Ingredient $j for Plat $i")
-                          ->setPlat($plat);
+                $ingredient->setName($ingredientName)
+                    ->setPlat($plat);
                 $manager->persist($ingredient);
             }
 
             // Ajouter des commentaires
             for ($k = 0; $k < 2; $k++) {
                 $commentaire = new Commentaire();
-                $commentaire->setComment("Commentaire $k for Plat $i")
-                            ->setUserId($userObjects[array_rand($userObjects)])
-                            ->setPlat($plat)
-                            ->setRating(rand(3, 5));
+                $commentaire->setComment("Délicieux ! " . ($k + 1))
+                    ->setUserId($userObjects[array_rand($userObjects)])
+                    ->setPlat($plat)
+                    ->setRating(rand(3, 5));
                 $manager->persist($commentaire);
             }
 
@@ -84,79 +99,69 @@ class AppFixtures extends Fixture
             $platObjects[] = $plat;
         }
 
-        // Créer des menus avec des plats
+        // Création des menus
         for ($m = 0; $m < 3; $m++) {
             $menu = new Menu();
             $menu->setName("Menu $m")
-                 ->setNombrePersonne(rand(2, 6));
+                ->setNombrePersonne(rand(2, 6));
             for ($p = 0; $p < 3; $p++) {
                 $menu->addPlat($platObjects[array_rand($platObjects)]);
             }
             $manager->persist($menu);
         }
 
-        // Créer des promotions
+        // Création des promotions
         for ($p = 0; $p < 2; $p++) {
             $promotion = new Promotion();
             $promotion->setPlat($platObjects[array_rand($platObjects)])
-                      ->setDateDebut(new \DateTime('+'.rand(1, 30).' days'))
-                      ->setDateFin(new \DateTime('+'.rand(31, 60).' days'))
-                      ->setPourcentage(rand(10, 30));
+                ->setDateDebut(new \DateTime('+'.rand(1, 30).' days'))
+                ->setDateFin(new \DateTime('+'.rand(31, 60).' days'))
+                ->setPourcentage(rand(10, 30));
             $manager->persist($promotion);
         }
 
-        // Créer des tables
+        // Création des tables
         $tableObjects = [];
         for ($t = 1; $t <= 5; $t++) {
             $table = new Table();
             $table->setNumero($t)
-                  ->setCapacite(rand(2, 6))
-                  ->setEstReserve(0);
+                ->setCapacite(rand(2, 6))
+                ->setEstReserve(0);
             $manager->persist($table);
             $tableObjects[] = $table;
         }
 
-        // Créer des réservations
+        // Création des réservations
         for ($r = 0; $r < 5; $r++) {
             $reservation = new Reservation();
             $reservation->setUserId($userObjects[array_rand($userObjects)])
-                        ->setTableId($tableObjects[array_rand($tableObjects)])
-                        ->setDate(new \DateTime('+'.rand(1, 15).' days'))
-                        ->setStatus(rand(0, 2))
-                        ->setIsEvent(rand(0, 1));
+                ->setTableId($tableObjects[array_rand($tableObjects)])
+                ->setDate(new \DateTime('+'.rand(1, 15).' days'))
+                ->setStatus(rand(0, 2))
+                ->setIsEvent(rand(0, 1));
             $manager->persist($reservation);
         }
 
-        // Créer des événements
+        // Création des événements
         for ($e = 0; $e < 2; $e++) {
             $evenement = new Event();
-            $evenement->setName("Evenement $e")
-                      ->setDescription("Description for Evenement $e")
-                      ->setDate(new \DateTime('+'.rand(1, 30).' days'))
-                      ->setPrice(mt_rand(1000, 5000) / 100)
-                      ->setPathImageEvent("images/events/koulMaghreb_event" . ($e + 1) . ".jpg");
+            $evenement->setName("Soirée Spéciale $e")
+                ->setDescription("Un événement exceptionnel pour découvrir nos saveurs.")
+                ->setDate(new \DateTime('+'.rand(1, 30).' days'))
+                ->setPrice(mt_rand(1000, 5000) / 100)
+                ->setPathImageEvent("images/events/koulMaghreb_event" . ($e + 1) . ".jpg");
             $manager->persist($evenement);
         }
 
-        // Administrateur
+        // Création d'un administrateur
         $admin = new User();
-        $admin->setFirstName('adminFirstName')
-              ->setLastName('adminLastName')
-              ->setEmail('admin@example.com')
-              ->setPassword($this->passwordEncoder->hashPassword($admin, 'password'))
-              ->setRoles(['ROLE_ADMIN'])
-              ->setEstArchive(0);
+        $admin->setFirstName('Admin')
+            ->setLastName('Admin')
+            ->setEmail('admin@example.com')
+            ->setPassword($this->passwordEncoder->hashPassword($admin, 'password'))
+            ->setRoles(['ROLE_ADMIN'])
+            ->setEstArchive(0);
         $manager->persist($admin);
-
-        // Utilisateur banni
-        $ban = new User();
-        $ban->setFirstName('banFirstName')
-             ->setLastName('banLastName')
-             ->setEmail('ban@example.com')
-             ->setPassword($this->passwordEncoder->hashPassword($ban, 'password'))
-             ->setRoles(['ROLE_BANNED'])
-             ->setEstArchive(0);
-        $manager->persist($ban);
 
         $manager->flush();
     }
