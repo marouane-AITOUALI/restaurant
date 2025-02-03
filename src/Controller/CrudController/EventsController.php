@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[Route('/events')]
 final class EventsController extends AbstractController
@@ -30,6 +32,23 @@ final class EventsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('pathImageEvent')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('events_directory'), // Dossier défini dans services.yaml
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gérer l'erreur si le fichier ne peut pas être déplacé
+                }
+
+                $event->setPathImageEvent('images/events/'. $newFilename);
+            }
+
             $entityManager->persist($event);
             $entityManager->flush();
 
