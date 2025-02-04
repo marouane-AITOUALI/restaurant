@@ -23,6 +23,7 @@ security:
             #     enable_csrf: true
             custom_authenticator: App\Security\LoginFormAuthenticator
             entry_point: App\Security\LoginFormAuthenticator # This line sets the entry point
+            access_denied_handler: App\Security\AccessDeniedHandler
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -49,7 +50,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/plat, roles: ROLE_USER }
+        - { path: ^/reservation-event, roles: ROLE_USER }
+        - { path: ^/banned, roles: ROLE_BANNED }
 
 when@test:
     security:
