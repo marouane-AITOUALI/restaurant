@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/menus')]
+#[Route('admin/menus')]
 final class MenusController extends AbstractController
 {
     #[Route(name: 'app_menus_index', methods: ['GET'])]

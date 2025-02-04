@@ -17,8 +17,12 @@
                 <p class="text-xl text-amber-100 max-w-2xl mb-8">
                     Une fusion unique des saveurs algériennes, tunisiennes et marocaines au cœur de Paris depuis 1994
                 </p>
-                {% if app.user %}
+                {% if app.user and "ROLE_BANNED" not in app.user.roles %}
                     <a href="#reservation" class="bg-amber-200 text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300">
+                        Réserver une table
+                    </a>
+                {% elseif app.user and "ROLE_BANNED" in app.user.roles %}
+                    <a href={{ path('banned') }} class="bg-amber-200 text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300">
                         Réserver une table
                     </a>
                 {% else %}
@@ -179,13 +183,13 @@
     </section>
 
     {# Réservation #}
-    {% if app.user %}
+    {% if app.user and 'ROLE_BANNED' not in app.user.roles %}
         <section id="reservation" class="py-16 bg-white">
             <div class="container mx-auto px-6">
                 <div class="max-w-2xl mx-auto">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl font-bold text-amber-900 mb-4">Réserver une table</h2>
-                        <p class="text-amber-50 text-center mb-2"> Si vous souhaitez réserver pour plus de 6 personnes, veuillez nous contacter directement au <br/><a href="tel:+33123456789" class="text-amber-600">01 23 45 67 89</a>.</p>
+                        <p class="text-gray-600 text-center mb-2"> Si vous souhaitez réserver pour plus de 6 personnes, veuillez nous contacter directement au <br/><a href="tel:+33123456789" class="text-amber-600">01 23 45 67 89</a>.</p>
                         <p class="text-gray-600">Pour une expérience culinaire inoubliable</p>
                     </div>
                     <form method="post" action="{{ path('reservation_create') }}" class="space-y-6" id="reservationForm">

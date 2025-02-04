@@ -43,17 +43,22 @@ class ReservationType extends AbstractType
             ])
             ->add('number_of_people', IntegerType::class, [
                 'required' => false,
+                'label' => 'Nombre de personnes',
             ])
             ->add('notes', TextType::class, [
                 'required' => false,
             ])
             ->add('table_id', EntityType::class, [
                 'class' => Table::class,
-                'choice_label' => 'id',
+                'choice_label' => 'numero',
+                'label' => 'N° Table',
             ])
             ->add('user_id', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => function (User $user) {
+                    return $user->getFirstName() . ' ' . $user->getLastName();
+                },
+                'label' => 'Utilisateur'
             ]);
     }
 

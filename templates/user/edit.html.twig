@@ -3,11 +3,17 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md space-y-6">
+    <h1 class="text-2xl font-semibold text-gray-800">Edit User</h1>
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <div class="flex justify-between items-center">
+        <a href="{{ path('app_user_index') }}" class="bg-amber-600 text-white font-bold px-4 py-2 rounded-md hover:bg-amber-700 transition">
+            ← Back to list
+        </a>
 
-    {{ include('user/_delete_form.html.twig') }}
+        {{ include('user/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

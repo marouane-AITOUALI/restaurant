@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-#[Route('/events')]
+#[Route('admin/events')]
 final class EventsController extends AbstractController
 {
     #[Route(name: 'app_events_index', methods: ['GET'])]

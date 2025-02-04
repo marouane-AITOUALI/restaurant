@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/promotion')]
+#[Route('admin/promotion')]
 final class PromotionController extends AbstractController
 {
     #[Route(name: 'app_promotion_index', methods: ['GET'])]

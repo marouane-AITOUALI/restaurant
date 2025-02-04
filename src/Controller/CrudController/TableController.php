@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/table')]
+#[Route('admin/table')]
 final class TableController extends AbstractController
 {
     #[Route(name: 'app_table_index', methods: ['GET'])]

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/ingredient')]
+#[Route('admin/ingredient')]
 final class IngredientController extends AbstractController
 {
     #[Route(name: 'app_ingredient_index', methods: ['GET'])]

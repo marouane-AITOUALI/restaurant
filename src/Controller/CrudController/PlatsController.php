@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/plats')]
+#[Route('admin/plats')]
 final class PlatsController extends AbstractController
 {
     #[Route(name: 'app_plats_index', methods: ['GET'])]

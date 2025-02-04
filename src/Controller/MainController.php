@@ -26,4 +26,10 @@ class MainController extends AbstractController
     {
         return $this->render('about/propos.html.twig');
     }
+
+    #[Route('/banned', name: 'banned')]
+    public function banned(): Response
+    {
+        return $this->render('error/banned.html.twig');
+    }
 } 
