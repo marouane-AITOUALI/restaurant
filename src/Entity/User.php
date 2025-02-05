@@ -83,6 +83,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function setEmail(string $email): static
     {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('Invalid email address');
+        }
         $this->email = $email;
 
         return $this;
@@ -95,8 +98,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function setPassword(string $password): static
     {
-        $this->password = $password;
-
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
         return $this;
     }
 
