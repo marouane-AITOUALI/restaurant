@@ -128,5 +128,15 @@ class Menu
 
         return $this;
     }
+
+    public function getPriceAllPlats(): float
+    {
+        $price = 0;
+        foreach ($this->plats as $plat) {
+            $price += $plat->getPrice();
+        }
+
+        return $price;
+    }
 }
 
