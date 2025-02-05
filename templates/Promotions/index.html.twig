@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Promotions{% endblock %}
+
+{% block body %}
+    <section class="py-16 bg-amber-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amber-200 mb-4">Nos Promotions</h2>
+                <p class="text-amber-100/80">Des offres exceptionnelles à ne pas manquer</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                {% for promotion in promotions %}
+                    <div class="bg-amber-800/50 rounded-xl p-6 border border-amber-700">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                {% if promotion.plat is not null and promotion.menu is not null %}
+                                    {# Promotion sur un plat et un menu simultanément #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">
+                                        {{ promotion.plat.name }} &amp; {{ promotion.menu.name }}
+                                    </h3>
+                                    {% set discountedPricePlat = promotion.plat.price - (promotion.plat.price * promotion.pourcentage / 100) %}
+                                    {% set discountedPriceMenu = promotion.menu.getPriceAllPlats() - (promotion.menu.getPriceAllPlats() * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        Plat : {{ discountedPricePlat|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.plat.price|number_format(2, '.', ',') }} €
+                                        </span><br>
+                                        Menu : {{ discountedPriceMenu|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.menu.getPriceAllPlats()|number_format(2, '.', ',') }} €</span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% elseif promotion.plat is not null %}
+                                    {# Promotion uniquement sur un plat #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">{{ promotion.plat.name }}</h3>
+                                    {% set discountedPrice = promotion.plat.price - (promotion.plat.price * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        {{ discountedPrice|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.plat.price|number_format(2, '.', ',') }} €
+                                        </span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% elseif promotion.menu is not null %}
+                                    {# Promotion uniquement sur un menu #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">{{ promotion.menu.name }}</h3>
+                                    {% set discountedPrice = promotion.menu.getPriceAllPlats() - (promotion.menu.getPriceAllPlats() * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        {{ discountedPrice|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.menu.getPriceAllPlats()|number_format(2, '.', ',') }} €
+                                        </span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
+                                -{{ promotion.pourcentage }}%
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center">
+                <a href="{{ path('app_hello') }}#reservation" class="inline-flex items-center px-6 py-3 bg-amber-200 text-amber-900 rounded-full hover:bg-amber-100 transition-colors duration-300">
+                    Réserver une table
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
