@@ -51,7 +51,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private Collection $commentaires;
 
     #[ORM\Column]
-    private bool $isVerified = false;
+    private ?int $is_verified = 0;
 
     public function __construct()
     {
@@ -212,13 +212,15 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function isVerified(): bool
     {
-        return $this->isVerified;
+        return $this->is_verified;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setIsVerified(bool $is_verified): static
     {
-        $this->isVerified = $isVerified;
+        $this->is_verified = $is_verified;
 
         return $this;
     }
+
+    
 }
