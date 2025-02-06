@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Form\ResetPasswordForm;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -97,5 +98,57 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Your email address has been verified.');
 
         return $this->redirectToRoute('app_register');
+    }
+
+    
+    #[Route('/reset-password', name: 'mot_de_passe_oublie')]
+    public function editPassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
+    {
+        // Créer le formulaire de mise à jour du mot de passe
+        $form = $this->createForm(ResetPasswordForm::class);
+
+        // Traiter la soumission du formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer les données du formulaire
+            $email = $form->get('email')->getData();
+            $oldPassword = $form->get('old_password')->getData();
+            $newPassword = $form->get('new_password')->getData();
+
+            // Vérifier si l'utilisateur existe avec cet email
+            $user = $entityManager->getRepository(User::class)->findOneByEmail($email);
+
+            if (!$user) {
+                // Si l'utilisateur n'existe pas, afficher un message d'erreur
+                $this->addFlash('error', 'Aucun utilisateur trouvé avec cet email.');
+                return $this->redirectToRoute('mot_de_passe_oublie');
+            }
+
+            // Vérifier si le mot de passe actuel est valide
+            if (!$passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                // Si le mot de passe actuel est incorrect, afficher un message d'erreur
+                $this->addFlash('error', 'L\'ancien mot de passe est incorrect.');
+                return $this->redirectToRoute('mot_de_passe_oublie');
+            }
+
+            // Hacher le nouveau mot de passe
+            $user->setPassword($newPassword);
+
+            // Sauvegarder les modifications dans la base de données
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // Afficher un message de succès
+            $this->addFlash('success', 'Votre mot de passe a été réinitialisé avec succès.');
+
+            // Rediriger pour éviter la soumission multiple du formulaire
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Rendre la vue avec le formulaire
+        return $this->render('security/forgot_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
