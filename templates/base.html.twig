@@ -11,6 +11,16 @@
         .arabic-font {
             font-family: 'Amiri', serif;
         }
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .weather-icon {
+            width: 24px;
+            height: 24px;
+        }
     </style>
 </head>
 <body class="bg-amber-50">
@@ -20,20 +30,28 @@
             <div class="flex items-center justify-between h-16">
                 {# Logo #}
                 <div class="flex items-center space-x-3 hover:opacity-90 transition-opacity">
-                <a href="{{ path('app_hello') }}" class="flex items-center space-x-3 hover:opacity-90 transition-opacity">
-                    <img src="{{ asset('images/logo_site.png') }}" alt="Logo KoulMaghreb" class="w-16 h-16 object-contain">
-                    <div class="flex flex-col">
-                        <span class="font-bold text-2xl text-amber-200">كول</span>
-                        <span class="text-lg font-bold text-white">KoulMaghreb</span>
-                    </div>
-                </a>
-
-            </div>
-            {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
-                <div>
-                    <a href={{ path('app_admin') }} class="text-sm font-semibold hover:text-amber-200 transition">Dashboard</a>
+                    <a href="{{ path('app_hello') }}" class="flex items-center space-x-3 hover:opacity-90 transition-opacity">
+                        <img src="{{ asset('images/logo_site.png') }}" alt="Logo KoulMaghreb" class="w-16 h-16 object-contain">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-2xl text-amber-200">كول</span>
+                            <span class="text-lg font-bold text-white">KoulMaghreb</span>
+                        </div>
+                    </a>
                 </div>
-            {% endif %}
+
+                {# Weather Info #}
+                <div class="weather-info">
+                    <img id="weather-icon" class="weather-icon" src="" alt="Weather Icon">
+                    <span id="weather-temp"></span>
+                    <span id="weather-description"></span>
+                </div>
+
+                {# Rest of the Navbar #}
+                {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                    <div>
+                        <a href={{ path('app_admin') }} class="text-sm font-semibold hover:text-amber-200 transition">Dashboard</a>
+                    </div>
+                {% endif %}
 
                 {# Navigation Links - Desktop #}
                 <div class="hidden md:flex space-x-8">
@@ -60,8 +78,6 @@
                         <a href={{ path('app_register')}} class="px-4 py-2 text-sm font-medium bg-amber-300 text-amber-900 rounded-lg hover:bg-amber-400 transition">Inscription</a>
                     </div>
                 {% endif %}
-
-
 
                 {# Mobile Menu Button #}
                 <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
@@ -123,6 +139,24 @@
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+
+        // Fetch Weather Data
+        const weatherIcon = document.getElementById('weather-icon');
+        const weatherTemp = document.getElementById('weather-temp');
+        const weatherDescription = document.getElementById('weather-description');
+
+        fetch('/api/weather')
+        .then(response => response.json())
+        .then(data => {
+            const temp = Math.round(data.temp);
+            const description = data.description;
+            const icon = data.icon;
+
+            weatherIcon.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+            weatherTemp.textContent = `${temp}°C`;
+            weatherDescription.textContent = description;
+        })
+        .catch(error => console.error('Error fetching weather data:', error));
     </script>
 </body>
 </html>
