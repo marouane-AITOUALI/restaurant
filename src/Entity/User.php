@@ -38,6 +38,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column]
     private ?int $est_archive = 0;
 
+    #[ORM\Column]
+    private ?int $is_verified = 0;
+
     /**
      * @var Collection<int, Reservation>
      */
@@ -50,8 +53,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'user_id')]
     private Collection $commentaires;
 
-    #[ORM\Column]
-    private ?int $is_verified = 0;
+    
 
     public function __construct()
     {
