@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
             $user->setFirstName("Prénom$i")
                 ->setLastName("Nom$i")
                 ->setEmail("user$i@example.com")
-                ->setPassword($this->passwordEncoder->hashPassword($user, "password"))
+                ->setPassword("password")
                 ->setRoles(["ROLE_USER"])
                 ->setEstArchive(0);
             $manager->persist($user);
@@ -158,7 +158,7 @@ class AppFixtures extends Fixture
         $admin->setFirstName('Admin')
             ->setLastName('Admin')
             ->setEmail('admin@example.com')
-            ->setPassword($this->passwordEncoder->hashPassword($admin, 'password'))
+            ->setPassword('password')
             ->setRoles(['ROLE_ADMIN'])
             ->setEstArchive(0);
         $manager->persist($admin);
