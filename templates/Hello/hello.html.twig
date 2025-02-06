@@ -104,37 +104,63 @@
                 <p class="text-amber-100/80">Des offres exceptionnelles à ne pas manquer</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8 mb-8">
-                <div class="bg-amber-800/50 rounded-xl p-6 border border-amber-700">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-xl font-bold text-amber-200 mb-2">Menu Familial</h3>
-                            <p class="text-amber-100/80 mb-4">
-                                4 personnes : Entrées + Plats + Desserts + Boissons
-                            </p>
-                            <p class="text-2xl font-bold text-amber-200">69.90 €</p>
-                            <p class="text-sm text-amber-100/60">Au lieu de 89.90 €</p>
-                        </div>
-                        <div class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
-                            -22%
+                {% for promotion in promotions|slice(0, 2) %}
+                    <div class="bg-amber-800/50 rounded-xl p-6 border border-amber-700">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                {% if promotion.plat is not null and promotion.menu is not null %}
+                                    {# Promotion sur un plat et un menu simultanément #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">
+                                        {{ promotion.plat.name }} &amp; {{ promotion.menu.name }}
+                                    </h3>
+                                    {% set discountedPricePlat = promotion.plat.price - (promotion.plat.price * promotion.pourcentage / 100) %}
+                                    {% set discountedPriceMenu = promotion.menu.getPriceAllPlats() - (promotion.menu.getPriceAllPlats() * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        Plat : {{ discountedPricePlat|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.plat.price|number_format(2, '.', ',') }} €
+                                        </span><br>
+                                        Menu : {{ discountedPriceMenu|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.menu.getPriceAllPlats()|number_format(2, '.', ',') }} €</span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% elseif promotion.plat is not null %}
+                                    {# Promotion uniquement sur un plat #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">{{ promotion.plat.name }}</h3>
+                                    {% set discountedPrice = promotion.plat.price - (promotion.plat.price * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        {{ discountedPrice|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.plat.price|number_format(2, '.', ',') }} €
+                                        </span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% elseif promotion.menu is not null %}
+                                    {# Promotion uniquement sur un menu #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">{{ promotion.menu.name }}</h3>
+                                    {% set discountedPrice = promotion.menu.getPriceAllPlats() - (promotion.menu.getPriceAllPlats() * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        {{ discountedPrice|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.menu.getPriceAllPlats()|number_format(2, '.', ',') }} €
+                                        </span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
+                                -{{ promotion.pourcentage }}%
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="bg-amber-800/50 rounded-xl p-6 border border-amber-700">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-xl font-bold text-amber-200 mb-2">Happy Hour</h3>
-                            <p class="text-amber-100/80 mb-4">
-                                Tous les jours de 15h à 18h
-                                Thé à la menthe + Pâtisserie
-                            </p>
-                            <p class="text-2xl font-bold text-amber-200">6.90 €</p>
-                            <p class="text-sm text-amber-100/60">Au lieu de 9.90 €</p>
-                        </div>
-                        <div class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
-                            -30%
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="text-center">
                 <a href={{ path('app_promotions')}} class="inline-flex items-center px-6 py-3 bg-amber-200 text-amber-900 rounded-full hover:bg-amber-100 transition-colors duration-300">
