@@ -3,79 +3,97 @@
 {% block title %}Réservation pour {{ event.name }}{% endblock %}
 
 {% block body %}
-<div class="container mx-auto px-6 py-12">
-    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-amber-900 text-center mb-2">Réservez votre table</h2>
-        <p class="text-amber-50 text-center mb-2"> Si vous souhaitez réserver pour plus de 6 personnes, veuillez nous contacter directement au <a href="tel:+33123456789" class="text-amber-600">01 23 45 67 89</a>.</p>
-        <p class="text-gray-600 text-center mb-6">Événement : <strong>{{ event.name }}</strong></p>
+    <div class="container mx-auto px-6 py-12">
+        <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-amber-900 text-center mb-2">Réservez votre table</h2>
+            <p class="text-amber-50 text-center mb-2">
+                Si vous souhaitez réserver pour plus de 6 personnes, veuillez nous contacter directement au
+                <a href="tel:+33123456789" class="text-amber-600">01 23 45 67 89</a>.
+            </p>
+            <p class="text-gray-600 text-center mb-6">Événement : <strong>{{ event.name }}</strong></p>
 
-        <form method="post" id="reservationForm" class="space-y-4">
-            <!-- Event Image - Centered -->
-            <div class="text-center">
-                <img src="{{ asset(event.pathImageEvent) }}" alt="{{ event.name }}" class="w-auto h-auto object-cover mb-4 rounded-lg mx-auto">
-            </div>
+            <!-- Vérification du droit de modification -->
+            {% if is_granted('event_edit', event) %}
+                <a href="{{ path('event_edit', {'id': event.id}) }}" class="block text-center bg-blue-500 text-white py-2 rounded-lg mb-2 hover:bg-blue-700 transition">
+                    Modifier l'événement
+                </a>
+            {% endif %}
 
-            <!-- Unmodifiable Date (Readonly) -->
-            <label class="block">
-                <span class="text-gray-700">📅 Date de réservation :</span>
-                <input type="datetime-local" name="date"
-                    value="{{ event.date ? event.date|date('Y-m-d\\TH:i') : '' }}"
-                    class="w-full px-4 py-2 border rounded-lg bg-gray-200 text-gray-500" readonly disabled required>
-            </label>
+            <!-- Vérification du droit de suppression -->
+            {% if is_granted('event_delete', event) %}
+                <form action="{{ path('event_delete', {'id': event.id}) }}" method="POST" class="text-center">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                    <button type="submit" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-800 transition"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">
+                        Supprimer l'événement
+                    </button>
+                </form>
+            {% endif %}
 
-            <!-- Phone Number -->
-            <label class="block">
-                <span class="text-gray-700">📞 Téléphone :</span>
-                <input type="text" name="phone" class="w-full px-4 py-2 border rounded-lg" required>
-            </label>
+            <form method="post" id="reservationForm" class="space-y-4 mt-4">
+                <!-- Event Image - Centered -->
+                <div class="text-center">
+                    <img src="{{ asset(event.pathImageEvent) }}" alt="{{ event.name }}" class="w-auto h-auto object-cover mb-4 rounded-lg mx-auto">
+                </div>
 
-            <!-- Number of People -->
-            <label class="block">
-                <span class="text-gray-700">👥 Nombre de personnes :</span>
-                <input type="number" id="number_of_people" name="number_of_people" min="1" class="w-full px-4 py-2 border rounded-lg" required>
-            </label>
+                <!-- Unmodifiable Date (Readonly) -->
+                <label class="block">
+                    <span class="text-gray-700">📅 Date de réservation :</span>
+                    <input type="datetime-local" name="date"
+                           value="{{ event.date ? event.date|date('Y-m-d\\TH:i') : '' }}"
+                           class="w-full px-4 py-2 border rounded-lg bg-gray-200 text-gray-500" readonly disabled required>
+                </label>
 
-            <!-- Notes -->
-            <label class="block">
-                <span class="text-gray-700">📝 Notes :</span>
-                <textarea name="notes" class="w-full px-4 py-2 border rounded-lg"></textarea>
-            </label>
+                <!-- Phone Number -->
+                <label class="block">
+                    <span class="text-gray-700">📞 Téléphone :</span>
+                    <input type="text" name="phone" class="w-full px-4 py-2 border rounded-lg" required>
+                </label>
 
-            <!-- Table Selection -->
-            <label class="block">
-                <span class="text-gray-700">🍽️ Sélectionnez une table :</span>
-                <select id="table" name="table_id" class="w-full px-4 py-2 border rounded-lg" required>
-                    {% for table in tables %}
-                        <option value="{{ table.id }}" data-capacity="{{ table.capacite }}">Table #{{ table.id }} ({{ table.capacite }} personnes)</option>
-                    {% else %}
-                        <option disabled>Aucune table disponible</option>
-                    {% endfor %}
-                </select>
-            </label>
+                <!-- Number of People -->
+                <label class="block">
+                    <span class="text-gray-700">👥 Nombre de personnes :</span>
+                    <input type="number" id="number_of_people" name="number_of_people" min="1" class="w-full px-4 py-2 border rounded-lg" required>
+                </label>
 
-            <!-- Submit Button -->
-            <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition">
-                Confirmer la réservation
-            </button>
-        </form>
+                <!-- Notes -->
+                <label class="block">
+                    <span class="text-gray-700">📝 Notes :</span>
+                    <textarea name="notes" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                </label>
 
+                <!-- Table Selection -->
+                <label class="block">
+                    <span class="text-gray-700">🍽️ Sélectionnez une table :</span>
+                    <select id="table" name="table_id" class="w-full px-4 py-2 border rounded-lg" required>
+                        {% for table in tables %}
+                            <option value="{{ table.id }}" data-capacity="{{ table.capacite }}">Table #{{ table.id }} ({{ table.capacite }} personnes)</option>
+                        {% else %}
+                            <option disabled>Aucune table disponible</option>
+                        {% endfor %}
+                    </select>
+                </label>
 
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition">
+                    Confirmer la réservation
+                </button>
+            </form>
+        </div>
 
+        <script>
+            document.getElementById('reservationForm').addEventListener('submit', function (e) {
+                const personsInput = document.getElementById('number_of_people');
+                const tableSelect = document.getElementById('table');
+                const selectedPersons = parseInt(personsInput.value);
+                const selectedTable = tableSelect.options[tableSelect.selectedIndex];
+                const tableCapacity = parseInt(selectedTable.getAttribute('data-capacity'));
+
+                if (selectedPersons > tableCapacity) {
+                    e.preventDefault();
+                    alert("Le nombre de personnes dépasse la capacité de la table choisie.");
+                }
+            });
+        </script>
     </div>
-    <script>
-        document.getElementById('reservationForm').addEventListener('submit', function (e) {
-            const personsInput = document.getElementById('number_of_people');
-            const tableSelect = document.getElementById('table');
-            const selectedPersons = parseInt(personsInput.value);
-            const selectedTable = tableSelect.options[tableSelect.selectedIndex];
-            const tableCapacity = parseInt(selectedTable.getAttribute('data-capacity'));
-
-            // Vérifie si le nombre de personnes est inférieur ou égal à la capacité de la table
-            if (selectedPersons > tableCapacity) {
-                e.preventDefault(); // Empêche la soumission du formulaire
-                alert("Le nombre de personnes dépasse la capacité de la table choisie.");
-            }
-        });
-    </script>
-</div>
 {% endblock %}
