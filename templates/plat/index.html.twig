@@ -37,6 +37,12 @@
                     <div class="bg-gray-100 p-4 rounded-lg shadow-md">
                         <p class="text-gray-700">{{ comment.comment }}</p>
                         <p class="text-sm text-gray-500">Note : {{ comment.rating }} / 5</p>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-700">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.5a8.25 8.25 0 0115 0"></path>
+                            </svg>
+                            <p class="text-sm text-gray-500">{{ comment.userId.lastName|upper }} {{ comment.userId.firstName }}</p>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
