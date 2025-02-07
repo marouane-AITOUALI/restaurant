@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ingrédient{% endblock %}
+
+{% block body %}
+    <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 space-y-8">
+        <h1 class="text-2xl font-bold text-gray-800 border-b pb-4">Ingrédient</h1>
+
+        <table class="w-full table-auto text-left border-collapse">
+            <tbody>
+                <tr class="border-b">
+                    <th class="py-2 px-4 font-medium text-gray-700">ID</th>
+                    <td class="py-2 px-4 text-gray-900">{{ ingredient.id }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="py-2 px-4 font-medium text-gray-700">Nom</th>
+                    <td class="py-2 px-4 text-gray-900">{{ ingredient.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="flex justify-between items-center space-y-0">
+            <a href="{{ path('app_ingredient_index') }}" 
+               class="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 rounded-lg 
+                      hover:bg-gray-200 transition duration-200 ease-in-out focus:outline-none 
+                      focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50">
+                Retour à la liste
+            </a>
+
+            <a href="{{ path('app_ingredient_edit', {'id': ingredient.id}) }}" 
+               class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg 
+                      hover:bg-blue-600 transition duration-200 ease-in-out focus:outline-none 
+                      focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Modifier
+            </a>
+
+            {{ include('ingredient/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{# templates/about.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}À Propos | Restaurant Maghreb{% endblock %}
+
+{% block body %}
+    <header class="bg-amber-900 text-white py-16 shadow-md">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl font-bold text-amber-200">Restaurant Maghreb</h1>
+            <p class="text-amber-100 text-lg">Un voyage culinaire au cœur du Maghreb</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-amber-900 mb-4">Notre Histoire</h2>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                Bienvenue chez <strong>Restaurant Maghreb</strong>, où nous célébrons les saveurs authentiques du Maroc, de l'Algérie et de la Tunisie.
+                Depuis notre création, nous nous engageons à offrir des plats traditionnels préparés avec des ingrédients frais et locaux.
+                Notre passion pour la gastronomie maghrébine nous pousse à recréer les recettes transmises de génération en génération.
+            </p>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-amber-900 mb-4">Notre Mission</h2>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                Nous avons pour mission de faire découvrir la richesse culinaire du Maghreb à travers des plats savoureux et authentiques.
+                Chaque assiette est conçue pour vous transporter au cœur des traditions culinaires de notre région.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold text-amber-900 mb-4">Nos Valeurs</h2>
+            <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed">
+                <li><strong>Authenticité :</strong> Respect des recettes traditionnelles.</li>
+                <li><strong>Qualité :</strong> Ingrédients frais et sélectionnés avec soin.</li>
+                <li><strong>Hospitalité :</strong> Un accueil chaleureux et convivial.</li>
+                <li><strong>Partage :</strong> Faire découvrir la culture maghrébine.</li>
+            </ul>
+        </section>
+    </main>
+{% endblock %}

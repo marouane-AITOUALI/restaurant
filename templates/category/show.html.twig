@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégorie {{ category.name }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6">
+        {# Fil d'ariane #}
+        <nav class="flex items-center text-gray-500 mb-6" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{{ path('app_category_index') }}" class="hover:text-amber-600 transition duration-200">
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="flex items-center">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-gray-600">{{ category.name }}</span>
+                </li>
+            </ol>
+        </nav>
+
+        {# En-tête #}
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-amber-900 mb-2">
+                {{ category.name }}
+            </h1>
+            <p class="text-sm text-gray-600">
+                Détails de la catégorie et plats associés
+            </p>
+        </div>
+
+        {# Informations de la catégorie #}
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <h2 class="text-sm font-medium text-gray-500">Identifiant</h2>
+                            <p class="mt-1 text-lg text-gray-900">#{{ category.id }}</p>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-medium text-gray-500">Nom</h2>
+                            <p class="mt-1 text-lg text-gray-900">{{ category.name }}</p>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-medium text-gray-500">Nombre de plats</h2>
+                            <p class="mt-1">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
+                                    {{ category.plats|length }} plats
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Liste des plats de la catégorie #}
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">
+                    Plats dans cette catégorie
+                </h2>
+            </div>
+            <div class="divide-y divide-gray-200">
+                {% if category.plats|length > 0 %}
+                    {% for plat in category.plats %}
+                        <div class="p-6 flex items-center justify-between hover:bg-gray-50">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-900">{{ plat.name }}</h3>
+                                <p class="text-sm text-gray-500">{{ plat.price|number_format(2, ',', ' ') }} €</p>
+                            </div>
+                            <a href="{{ path('app_plats_show', {'id': plat.id}) }}" 
+                               class="text-amber-600 hover:text-amber-900 transition duration-200">
+                                Voir le plat
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="p-6 text-center text-gray-500 italic">
+                        Aucun plat n'est associé à cette catégorie pour le moment.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {# Actions #}
+        <div class="flex justify-between items-center">
+            <div class="flex space-x-4">
+                <a href="{{ path('app_category_index') }}" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 -ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                    Retour à la liste
+                </a>
+            </div>
+            
+            <div class="flex space-x-4">
+                <a href="{{ path('app_category_edit', {'id': category.id}) }}" 
+                   class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 -ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                    Modifier
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

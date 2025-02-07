@@ -1,0 +1,54 @@
+{% block body %}
+    <div class="max-w-2xl mx-auto bg-white p-6 shadow-lg rounded-lg">
+
+        {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+
+        <div class="grid grid-cols-1 gap-4">
+            <div>
+                {{ form_label(form.date, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.date, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.status, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.status, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.isEvent, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.isEvent, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.phone, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.phone, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.number_of_people, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.number_of_people, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.notes, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.notes, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.table_id, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.table_id, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.user_id, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                {{ form_widget(form.user_id, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300'}}) }}
+            </div>
+        </div>
+
+        <button class="mt-6 w-full bg-amber-300 text-amber-900 font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300">
+            {{ button_label|default('Enregistrer') }}
+        </button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

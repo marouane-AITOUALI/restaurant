@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de Bord - KoulMaghreb{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-amber-900 mb-12 text-center">
+            <span class="border-b-4 border-amber-500 pb-2">Tableau de Bord Administrateur</span>
+        </h1>
+
+        {# Statistiques rapides #}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-4xl text-amber-600 mb-2">👥</div>
+                    <h2 class="text-3xl font-bold text-amber-900 mb-2">{{ users|length }}</h2>
+                    <p class="text-amber-700 font-medium">Utilisateurs enregistrés</p>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-4xl text-amber-600 mb-2">🍽️</div>
+                    <h2 class="text-3xl font-bold text-amber-900 mb-2">{{ plats|length }}</h2>
+                    <p class="text-amber-700 font-medium">Plats disponibles</p>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-4xl text-amber-600 mb-2">📅</div>
+                    <h2 class="text-3xl font-bold text-amber-900 mb-2">{{ reservations|length }}</h2>
+                    <p class="text-amber-700 font-medium">Réservations</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {# Liens vers les pages CRUD #}
+        <div class="mb-12 bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-amber-900 mb-8 text-center">
+                <span class="border-b-4 border-amber-500 pb-2">Gestion des Entités</span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_category_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">📁</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Catégories</span>
+                    </a>
+                    <a href="{{ path('app_commentaire_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">💬</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Commentaires</span>
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ORGANISATEUR_EVENT') %}
+                    <a href="{{ path('app_events_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🎉</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Événements</span>
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_ingredient_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🧂</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Ingrédients</span>
+                    </a>
+                    <a href="{{ path('app_menus_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">📋</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Menus</span>
+                    </a>
+                    <a href="{{ path('app_plats_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🍲</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Plats</span>
+                    </a>
+                    <a href="{{ path('app_promotion_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🎁</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Promotions</span>
+                    </a>
+                    <a href="{{ path('app_reservations_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🗓️</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Réservations</span>
+                    </a>
+                    <a href="{{ path('app_table_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">🍽️</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Tables</span>
+                    </a>
+                    <a href="{{ path('app_user_index') }}" class="bg-gradient-to-r from-amber-50 to-amber-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4 group">
+                        <span class="text-2xl group-hover:scale-125 transition-transform duration-300">👤</span>
+                        <span class="text-lg font-medium text-amber-900 group-hover:text-amber-700 transition-colors duration-300">Utilisateurs</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,296 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KoulMaghreb - Saveurs authentiques du Maghreb{% endblock %}
+
+{% block body %}
+    {# Hero Section avec Slider #}
+    <div class="relative h-[600px] overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="bg-gradient-to-r from-amber-900/90 to-amber-800/90 absolute inset-0 z-10"></div>
+            <img src="{{ asset('images/logo.webp') }}" alt="Restaurant KoulMaghreb" class="w-full h-full object-cover">
+        </div>
+        <div class="relative z-20 h-full flex items-center">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Bienvenue chez <span class="text-amber-200">KoulMaghreb</span>
+                </h1>
+                <p class="text-xl text-amber-100 max-w-2xl mb-8">
+                    Une fusion unique des saveurs algériennes, tunisiennes et marocaines au cœur de Paris depuis 1994
+                </p>
+                {% if app.user and "ROLE_BANNED" not in app.user.roles %}
+                    <a href="#reservation" class="bg-amber-200 text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300">
+                        Réserver une table
+                    </a>
+                {% elseif app.user and "ROLE_BANNED" in app.user.roles %}
+                    <a href={{ path('banned') }} class="bg-amber-200 text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300">
+                        Réserver une table
+                    </a>
+                {% else %}
+                    <a href={{ path('app_login')}} class="bg-amber-200 text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300">
+                        Réserver une table
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {# Notre Histoire #}
+    <section class="py-16 bg-amber-50">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-amber-900">Notre Histoire</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        Fondé en 1994 par deux amis passionnés de cuisine - Nassim (Algérie), Amine (Tunisie) et Marouane (Maroc) - 
+                        KoulMaghreb est né d'un rêve commun : créer un lieu où les saveurs des trois pays du Maghreb se rencontrent 
+                        et s'harmonisent parfaitement.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Plus qu'un restaurant, KoulMaghreb est une célébration de l'amitié et du partage, 
+                        où chaque plat raconte une histoire et où chaque client devient partie intégrante de notre grande famille.
+                    </p>
+                </div>
+                <div class="relative">
+                    <img src="{{ asset('images/photo_restaurant.jpg') }}" alt="Notre restaurant" class="rounded-lg shadow-xl">
+                    <div class="absolute -bottom-6 -right-6 bg-amber-200 p-4 rounded-lg shadow-lg">
+                        <p class="text-amber-900 font-bold">29 ans</p>
+                        <p class="text-amber-800">d'excellence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Menu du Jour #}
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amber-900 mb-4">Menu Spécial du Jour</h2>
+                <p class="text-gray-600">Découvrez nos spécialités quotidiennes</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div class="bg-amber-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-bold text-amber-900 mb-2">Entrée</h3>
+                    <p class="text-gray-700 mb-4">Brick à l'œuf et thon</p>
+                    <span class="text-amber-600 font-semibold">6.50 €</span>
+                </div>
+                <div class="bg-amber-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-bold text-amber-900 mb-2">Plat</h3>
+                    <p class="text-gray-700 mb-4">Couscous Royal</p>
+                    <span class="text-amber-600 font-semibold">18.90 €</span>
+                </div>
+                <div class="bg-amber-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-bold text-amber-900 mb-2">Dessert</h3>
+                    <p class="text-gray-700 mb-4">Baklawa Assorti</p>
+                    <span class="text-amber-600 font-semibold">5.90 €</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href={{ path('app_specialites') }} class="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors duration-300">
+                    Voir nos spécialités du jour
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {# Promotions #}
+    <section class="py-16 bg-amber-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amber-200 mb-4">Nos Promotions</h2>
+                <p class="text-amber-100/80">Des offres exceptionnelles à ne pas manquer</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                {% for promotion in promotions|slice(0, 2) %}
+                    <div class="bg-amber-800/50 rounded-xl p-6 border border-amber-700">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                {% if promotion.plat is not null and promotion.menu is not null %}
+                                    {# Promotion sur un plat et un menu simultanément #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">
+                                        {{ promotion.plat.name }} &amp; {{ promotion.menu.name }}
+                                    </h3>
+                                    {% set discountedPricePlat = promotion.plat.price - (promotion.plat.price * promotion.pourcentage / 100) %}
+                                    {% set discountedPriceMenu = promotion.menu.getPriceAllPlats() - (promotion.menu.getPriceAllPlats() * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        Plat : {{ discountedPricePlat|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.plat.price|number_format(2, '.', ',') }} €
+                                        </span><br>
+                                        Menu : {{ discountedPriceMenu|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.menu.getPriceAllPlats()|number_format(2, '.', ',') }} €</span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% elseif promotion.plat is not null %}
+                                    {# Promotion uniquement sur un plat #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">{{ promotion.plat.name }}</h3>
+                                    {% set discountedPrice = promotion.plat.price - (promotion.plat.price * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        {{ discountedPrice|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.plat.price|number_format(2, '.', ',') }} €
+                                        </span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% elseif promotion.menu is not null %}
+                                    {# Promotion uniquement sur un menu #}
+                                    <h3 class="text-xl font-bold text-amber-200 mb-2">{{ promotion.menu.name }}</h3>
+                                    {% set discountedPrice = promotion.menu.getPriceAllPlats() - (promotion.menu.getPriceAllPlats() * promotion.pourcentage / 100) %}
+                                    <p class="text-2xl font-bold text-amber-200">
+                                        {{ discountedPrice|number_format(2, '.', ',') }} €
+                                        <span class="text-sm text-amber-200">
+                                            Au lieu de {{ promotion.menu.getPriceAllPlats()|number_format(2, '.', ',') }} €
+                                        </span>
+                                    </p>
+                                    <p class="text-sm text-amber-100/60">
+                                        Valable du {{ promotion.dateDebut|date('d/m/Y') }} au {{ promotion.datefin|date('d/m/Y') }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
+                                -{{ promotion.pourcentage }}%
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center">
+                <a href={{ path('app_promotions')}} class="inline-flex items-center px-6 py-3 bg-amber-200 text-amber-900 rounded-full hover:bg-amber-100 transition-colors duration-300">
+                    Voir toutes les promotions
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {# Événements #}
+    <section class="py-16 bg-amber-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amber-900 mb-4">Événements à venir</h2>
+                <p class="text-gray-600">Vivez des moments inoubliables</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                {% for event in events %}
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                        <img src="{{ asset(event.pathImageEvent) }}" alt="{{ event.name }}" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-amber-900">{{ event.name }}</h3>
+                                <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-sm font-bold">
+                                    {{ event.date|date('d M') }}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 mb-4">{{ event.description }}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-600 font-semibold">{{ event.price }} € / personne</span>
+                                <a href="{{ path('event_reserve', {id: event.id}) }}" class="px-4 py-2 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors duration-300">
+                                    Réserver
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Aucun événement à venir.</p>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+    {# Réservation #}
+    {% if app.user and 'ROLE_BANNED' not in app.user.roles %}
+        <section id="reservation" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="max-w-2xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-amber-900 mb-4">Réserver une table</h2>
+                        <p class="text-gray-600 text-center mb-2"> Si vous souhaitez réserver pour plus de 6 personnes, veuillez nous contacter directement au <br/><a href="tel:+33123456789" class="text-amber-600">01 23 45 67 89</a>.</p>
+                        <p class="text-gray-600">Pour une expérience culinaire inoubliable</p>
+                    </div>
+                    <form method="post" action="{{ path('reservation_create') }}" class="space-y-6" id="reservationForm">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                                <input type="date" id="date" name="date" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label for="time" class="block text-sm font-medium text-gray-700 mb-2">Heure</label>
+                                <input type="time" id="time" name="time" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label for="persons" class="block text-sm font-medium text-gray-700 mb-2">Nombre de personnes</label>
+                                <select id="persons" name="persons" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                    <option value="">Sélectionnez</option>
+                                    {% for capacity in 1..6 %}
+                                        <option value="{{ capacity }}">{{ capacity }} personne(s)</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label for="table" class="block text-sm font-medium text-gray-700 mb-2">Table</label>
+                                <select id="table" name="table_id" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                    <option value="">Sélectionnez une table</option>
+                                    {% for table in tables %}
+                                        <option value="{{ table.id }}" data-capacity="{{ table.capacite }}">Table {{ table.numero }} ({{ table.capacite }} personnes)</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                                <input type="tel" id="phone" name="phone" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="06 12 34 56 78">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Notes spéciales</label>
+                            <textarea id="notes" name="notes" rows="3"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                                placeholder="Allergies, préférences, occasions spéciales..."></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit"
+                                class="inline-flex items-center px-8 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors duration-300">
+                                Confirmer la réservation
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+
+    <script>
+        document.getElementById('reservationForm').addEventListener('submit', function (e) {
+            const personsSelect = document.getElementById('persons');
+            const tableSelect = document.getElementById('table');
+            const selectedPersons = parseInt(personsSelect.value);
+            const selectedTable = tableSelect.options[tableSelect.selectedIndex];
+            const tableCapacity = parseInt(selectedTable.getAttribute('data-capacity'));
+
+            if (selectedPersons > tableCapacity) {
+                e.preventDefault(); // Empêche la soumission du formulaire
+                alert("Le nombre de personnes dépasse la capacité de la table choisie.");
+            }
+        });
+    </script>
+    
+{% endblock %}

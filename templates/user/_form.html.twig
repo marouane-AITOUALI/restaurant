@@ -1,0 +1,56 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6 bg-white p-6 rounded-lg shadow-md'}}) }}
+
+    {# Email #}
+    <div>
+        {{ form_label(form.email, 'Email', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+        {{ form_errors(form.email, {'attr': {'class': 'text-red-500 text-xs'}}) }}
+    </div>
+
+    {# Rôles (Checkboxes) #}
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Roles</label>
+        <div class="flex space-x-4 mt-2">
+            {% for choice in form.roles %}
+                <label class="flex items-center space-x-2">
+                    {{ form_widget(choice, {'attr': {'class': 'rounded border-gray-300 focus:ring-indigo-500'}}) }}
+                    <span class="text-gray-700 text-sm">{{ choice.vars.label }}</span>
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# Prénom #}
+    <div>
+        {{ form_label(form.firstName, 'Prénom', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.firstName, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+        {{ form_errors(form.firstName, {'attr': {'class': 'text-red-500 text-xs'}}) }}
+    </div>
+
+    {# Nom #}
+    <div>
+        {{ form_label(form.lastName, 'Nom', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.lastName, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+        {{ form_errors(form.lastName, {'attr': {'class': 'text-red-500 text-xs'}}) }}
+    </div>
+
+    {# Est Archivé (Switch) #}
+    <div class="flex items-center space-x-3">
+        {{ form_label(form.est_archive, 'Archivé ?', {'attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.est_archive, {'attr': {'class': 'rounded border-gray-300 focus:ring-indigo-500'}}) }}
+    </div>
+
+    {# Vérifié (Checkbox) #}
+    <div class="flex items-center space-x-2">
+        {{ form_label(form.isVerified, 'Compte vérifié ?', {'attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.isVerified, {'attr': {'class': 'rounded border-gray-300 focus:ring-indigo-500'}}) }}
+    </div>
+
+    {# Bouton de soumission #}
+    <div class="pt-4">
+        <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+
+{{ form_end(form) }}

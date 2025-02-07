@@ -1,0 +1,94 @@
+{{ form_start(form, { 'attr': { 'class': 'space-y-6' } }) }}
+    {# Conteneur des champs du formulaire avec un espacement vertical #}
+    <div class="grid grid-cols-1 gap-y-6">
+        {# Champ 'name' #}
+        <div>
+            {{ form_label(form.name, 'Nom du plat', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.name, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500'
+                }
+            }) }}
+        </div>
+
+        {# Champ 'description' #}
+        <div>
+            {{ form_label(form.description, 'Description', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.description, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500'
+                }
+            }) }}
+        </div>
+
+        {# Champ 'price' #}
+        <div>
+            {{ form_label(form.price, 'Prix', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.price, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500'
+                }
+            }) }}
+        </div>
+
+        {# Champ 'is_daily_special' #}
+        <div>
+            {{ form_label(form.is_daily_special, 'Plat du jour', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            <div class="mt-1 flex space-x-4">
+                {{ form_widget(form.is_daily_special, {
+                    'attr': {
+                        'class': 'text-amber-500 focus:ring-amber-500'
+                    }
+                }) }}
+            </div>
+        </div>
+
+        {# Champ 'pays' #}
+        <div>
+            {{ form_label(form.pays, 'Pays', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.pays, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500'
+                }
+            }) }}
+        </div>
+
+        {# Champ 'category' #}
+        <div>
+            {{ form_label(form.category, 'Catégorie', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.category, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500'
+                }
+            }) }}
+        </div>
+
+        {# Champ 'menus' #}
+        <div>
+            {{ form_label(form.menus, 'Menus associés', { 'label_attr': { 'class': 'block text-sm font-medium text-gray-700' } }) }}
+            <div class="mt-2 space-y-2">
+                {% for menu in form.menus %}
+                    <div class="flex items-center">
+                        {{ form_widget(menu, {
+                            'attr': {
+                                'class': 'h-4 w-4 text-amber-500 focus:ring-amber-500 border-gray-300 rounded'
+                            }
+                        }) }}
+                        {{ form_label(menu, null, {
+                            'label_attr': { 'class': 'ml-2 text-sm text-gray-700' }
+                        }) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {# Bouton stylisé #}
+    <div class="mt-6">
+        <button 
+            type="submit" 
+            class="inline-flex justify-center items-center px-6 py-3 text-white bg-amber-600 border border-transparent rounded-lg shadow-sm text-sm font-medium hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+            {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+{{ form_end(form) }}
