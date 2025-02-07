@@ -53,6 +53,7 @@ security:
         - { path: ^/event, roles: [ ROLE_ADMIN, ROLE_ORGANISATEUR_EVENT ] }
         - { path: ^/reservation-event, roles: ROLE_USER }
         - { path: ^/banned, roles: ROLE_BANNED }
+        - { path: ^/plat, roles: ROLE_USER }
         - { path: ^/dashboard, roles: ROLE_ORGANISATEUR_EVENT }
 
 

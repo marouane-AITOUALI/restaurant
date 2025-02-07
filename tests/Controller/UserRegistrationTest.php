@@ -11,7 +11,7 @@ class UserRegistrationTest extends WebTestCase
         $client = static::createClient();
 
         // Envoi d'une requête GET vers la page d'inscription
-        $crawler = $client->request('GET', '/register');
+        $crawler = $client->request('GET', '/inscription');
 
         // Vérifier que la réponse HTTP est réussie (code 200)
         $this->assertResponseIsSuccessful();

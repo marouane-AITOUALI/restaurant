@@ -1,11 +1,22 @@
-<h1>Hi! Please confirm your email!</h1>
+<h1 style="color: #4A90E2;">KoulMaghreb</h1>
+<h2 style="font-size: 1.5rem; color: #333;">Confirmez votre adresse e-mail pour finaliser l'inscription !</h2>
 
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
-    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+<p style="font-size: 1.1rem; color: #555;">
+    Bonjour,<br><br>
+    Pour finaliser votre inscription, merci de confirmer votre adresse e-mail en cliquant sur le lien ci-dessous :<br><br>
+    <a href="{{ signedUrl|raw }}" style="background-color: #4A90E2; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Confirmer mon adresse e-mail</a>
 </p>
 
-<p>
-    Cheers!
+<p style="font-size: 1.1rem; color: #555;">
+    Ce lien expirera dans : <strong>{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}</strong>. Si vous n'avez pas demandé cette action, veuillez ignorer ce message.
+</p>
+
+<p style="font-size: 1.1rem; color: #555;">
+    Si vous avez des questions, n'hésitez pas à nous contacter.<br><br>
+    À très bientôt,<br>
+    L'équipe KoulMaghreb
+</p>
+
+<p style="font-size: 0.9rem; color: #777;">
+    Ce message est automatique, merci de ne pas y répondre.
 </p>
