@@ -163,6 +163,16 @@ class AppFixtures extends Fixture
             ->setEstArchive(0);
         $manager->persist($admin);
 
+        $organisateurEvent = new User();
+        $organisateurEvent->setFirstName('Organisateur')
+            ->setLastName('Event')
+            ->setEmail('organisateur@example.com')
+            ->setPassword('password')
+            ->setRoles(['ROLE_ORGANISATEUR_EVENT'])  // Attribuer le rôle d'organisateur
+            ->setEstArchive(0);
+
+        $manager->persist($organisateurEvent);
+
         $manager->flush();
     }
 }

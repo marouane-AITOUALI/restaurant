@@ -47,7 +47,7 @@
                 </div>
 
                 {# Rest of the Navbar #}
-                {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                {% if app.user and ('ROLE_ADMIN' in app.user.roles or 'ROLE_ORGANISATEUR_EVENT' in app.user.roles) %}
                     <div>
                         <a href={{ path('app_admin') }} class="text-sm font-semibold hover:text-amber-200 transition">Dashboard</a>
                     </div>
