@@ -6,6 +6,11 @@ use App\Repository\PlatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use App\Entity\Commentaire;
+
 
 final class PlatController extends AbstractController
 {
@@ -28,4 +33,52 @@ final class PlatController extends AbstractController
             'platSpecial' => $platsSpecial,
         ]);
     }
+
+    #[Route('/plat/{id}/comment', name: 'plat_add_comment', methods: ['POST'])]
+    public function addComment(
+        int $id,
+        Request $request,
+        PlatRepository $platRepository,
+        EntityManagerInterface $entityManager,
+        Security $security
+    ): Response {
+        // Get the current user
+        $user = $security->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour commenter.');
+            return $this->redirectToRoute('plat_detail', ['id' => $id]);
+        }
+
+        // Find the Plat entity
+        $plat = $platRepository->find($id);
+        if (!$plat) {
+            throw $this->createNotFoundException("Le plat demandé n'existe pas.");
+        }
+
+        // Get form data
+        $commentText = $request->request->get('comment');
+        $rating = (int) $request->request->get('rating');
+
+        // Validate input
+        if (!$commentText || $rating < 1 || $rating > 5) {
+            $this->addFlash('error', 'Veuillez remplir tous les champs correctement.');
+            return $this->redirectToRoute('plat_detail', ['id' => $id]);
+        }
+
+        // Create a new Comment entity
+        $comment = new Commentaire();
+        $comment->setUserId($user);
+        $comment->setPlat($plat);
+        $comment->setComment($commentText);
+        $comment->setRating($rating);
+
+        // Save to database
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre commentaire a été ajouté avec succès.');
+
+        return $this->redirectToRoute('plat_detail', ['id' => $id]);
+    }
+
 }
