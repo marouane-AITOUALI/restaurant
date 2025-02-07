@@ -20,8 +20,8 @@ class UserType extends AbstractType
                     'Admin' => 'ROLE_ADMIN',
                     'Banned' => 'ROLE_BANNED',
                 ],
-                'multiple' => true, // Important to allow selection of multiple roles
-                'expanded' => true,  // Display as checkboxes instead of a dropdown
+                'multiple' => true,
+                'expanded' => true,  
             ])
             ->add('firstName')
             ->add('lastName')

@@ -167,7 +167,6 @@ class Plat
     public function removeIngredient(Ingredient $ingredient): static
     {
         if ($this->ingredients->removeElement($ingredient)) {
-            // set the owning side to null (unless already changed)
             if ($ingredient->getPlat() === $this) {
                 $ingredient->setPlat(null);
             }
@@ -197,7 +196,6 @@ class Plat
     public function removeCommentaire(Commentaire $commentaire): static
     {
         if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
             if ($commentaire->getPlat() === $this) {
                 $commentaire->setPlat(null);
             }
@@ -227,7 +225,6 @@ class Plat
     public function removeMenu(Menu $menu): static
     {
         if ($this->menus->removeElement($menu)) {
-            // set the owning side to null (unless already changed)
             if ($menu->getPlats() === $this) {
                 $menu->removePlat($this);
             }
@@ -257,7 +254,6 @@ class Plat
     public function removePromotion(Promotion $promotion): static
     {
         if ($this->promotions->removeElement($promotion)) {
-            // set the owning side to null (unless already changed)
             if ($promotion->getPlat() === $this) {
                 $promotion->setPlat(null);
             }

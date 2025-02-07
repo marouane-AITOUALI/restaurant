@@ -36,12 +36,12 @@ class PlatType extends AbstractType
             ])
             ->add('menus', EntityType::class, [
                 'class' => Menu::class,
-                'choice_label' => 'name', // Afficher le NOM du menu (au lieu de l'id)
-                'multiple' => true, // Choix multiple
-                'expanded' => true, // Afficher des checkboxes
+                'choice_label' => 'name', 
+                'multiple' => true, 
+                'expanded' => true,
                 'query_builder' => function (MenuRepository $menuRepository) {
                     return $menuRepository->createQueryBuilder('m')
-                        ->orderBy('m.name', 'ASC'); // Optionnel : trier les menus
+                        ->orderBy('m.name', 'ASC'); 
                 },
             ]);
     }

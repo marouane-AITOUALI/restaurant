@@ -78,7 +78,6 @@ class Menu
     public function removePlat(Plat $plat): static
     {
         if ($this->plats->removeElement($plat)) {
-            // set the owning side to null (unless already changed)
             if ($plat->getMenus()->contains($this)) {
                 $plat->removeMenu($this);
             }
@@ -108,7 +107,6 @@ class Menu
     public function removePromotion(Promotion $promotion): static
     {
         if ($this->promotions->removeElement($promotion)) {
-            // set the owning side to null (unless already changed)
             if ($promotion->getMenu() === $this) {
                 $promotion->setMenu(null);
             }

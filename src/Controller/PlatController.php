@@ -42,20 +42,17 @@ final class PlatController extends AbstractController
         EntityManagerInterface $entityManager,
         Security $security
     ): Response {
-        // Get the current user
         $user = $security->getUser();
         if (!$user) {
             $this->addFlash('error', 'Vous devez être connecté pour commenter.');
             return $this->redirectToRoute('plat_detail', ['id' => $id]);
         }
 
-        // Find the Plat entity
         $plat = $platRepository->find($id);
         if (!$plat) {
             throw $this->createNotFoundException("Le plat demandé n'existe pas.");
         }
 
-        // Get form data
         $commentText = $request->request->get('comment');
         $rating = (int) $request->request->get('rating');
 

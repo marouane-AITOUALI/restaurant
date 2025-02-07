@@ -31,13 +31,13 @@ class Reservation
     private ?int $isEvent = null;
 
     #[ORM\Column(length: 15, nullable: true)]
-    private ?string $phone = null; // Nouveau champ pour le téléphone
+    private ?string $phone = null; 
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $number_of_people = null; // Nouveau champ pour le nombre de personnes
+    private ?int $number_of_people = null; 
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $notes = null; // Nouveau champ pour les notes
+    private ?string $notes = null; 
 
     public function getId(): ?int
     {

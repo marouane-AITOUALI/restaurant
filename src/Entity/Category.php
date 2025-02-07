@@ -67,7 +67,6 @@ class Category
     public function removePlat(Plat $plat): static
     {
         if ($this->plats->removeElement($plat)) {
-            // set the owning side to null (unless already changed)
             if ($plat->getCategory() === $this) {
                 $plat->setCategory(null);
             }

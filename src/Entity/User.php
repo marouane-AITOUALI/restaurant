@@ -173,7 +173,6 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function removeReservation(Reservation $reservation): static
     {
         if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
             if ($reservation->getUserId() === $this) {
                 $reservation->setUserId(null);
             }
@@ -203,7 +202,6 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function removeCommentaire(Commentaire $commentaire): static
     {
         if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
             if ($commentaire->getUserId() === $this) {
                 $commentaire->setUserId(null);
             }

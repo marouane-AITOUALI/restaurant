@@ -46,13 +46,12 @@ class RegistrationController extends AbstractController
             $user->setFirstname($firstName);
             $user->setLastname($lastName); 
             $user->setEmail($email);
-            // encode the plain password
             $user->setPassword($plainPassword);
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            // Vérification Email (générée automatiquement)
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('aitoualimarouane@gmail.com', 'koulMaghreb'))
@@ -61,7 +60,6 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            // do anything else you need here, like send an email
             return $this->redirectToRoute('app_login');
         }
 

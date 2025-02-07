@@ -98,7 +98,6 @@ class Table
     public function removeReservation(Reservation $reservation): static
     {
         if ($this->reservation->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
             if ($reservation->getTableId() === $this) {
                 $reservation->setTableId(null);
             }

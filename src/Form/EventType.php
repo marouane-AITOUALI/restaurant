@@ -22,7 +22,7 @@ class EventType extends AbstractType
             ->add('price')
             ->add('pathImageEvent', FileType::class, [
                 'label' => 'Image de l\'événement',
-                'mapped' => false, // Ne correspond pas directement à une propriété de l'entité
+                'mapped' => false, 
                 'required' => false,
                 'constraints' => [
                     new File([

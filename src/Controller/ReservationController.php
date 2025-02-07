@@ -26,7 +26,7 @@ final class ReservationController extends AbstractController
     #[Route('/reservations/create', name: 'reservation_create', methods: ['POST'])]
     public function create(Request $request, TableRepository $tableRepository, EntityManagerInterface $em): Response
     {
-        // Récupérer les données du formulaire
+
         $date = $request->request->get('date');
         $time = $request->request->get('time');
         $persons = $request->request->get('persons');
@@ -34,28 +34,24 @@ final class ReservationController extends AbstractController
         $phone = $request->request->get('phone');
         $notes = $request->request->get('notes');
 
-        // Récupérer la table sélectionnée
+  
         $table = $tableRepository->find($tableId);
 
-        // Créer la réservation
         $reservation = new Reservation();
-        $reservation->setUserId($this->getUser()); // Assurer que l'utilisateur est connecté
-        $reservation->setDate(new \DateTime($date . ' ' . $time)); // Créer un objet DateTime
+        $reservation->setUserId($this->getUser()); // Assure que user est connecté
+        $reservation->setDate(new \DateTime($date . ' ' . $time)); 
         $reservation->setNumberOfPeople($persons);
         $reservation->setTableId($table);
-        $reservation->setStatus(0); // Statut initial
-        $reservation->setIsEvent(0); // Pas un événement
+        $reservation->setStatus(0); 
+        $reservation->setIsEvent(0); 
         $reservation->setPhone($phone);
         $reservation->setNotes($notes);
-        // Marquer la table comme réservée
         $table->setEstReserve(1);
 
-        // Enregistrer la réservation
         $em->persist($reservation);
         $em->persist($table);
         $em->flush();
 
-        // Retourner une réponse, ici une redirection vers la page des réservations
         return $this->redirectToRoute('app_reservations_user');
     }
 

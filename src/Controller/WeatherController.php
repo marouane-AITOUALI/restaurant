@@ -18,9 +18,7 @@ class WeatherController extends AbstractController
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * @Route("/api/weather", name="api_weather")
-     */
+
     #[Route(path: '/api/weather', name: 'api_weather')]
     public function getWeather(CacheInterface $cache): JsonResponse
     {
