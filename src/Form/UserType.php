@@ -25,13 +25,19 @@ class UserType extends AbstractType
             ])
             ->add('firstName')
             ->add('lastName')
+            ->add('password')
             ->add('est_archive', ChoiceType::class, [
                 'choices' => [
                     '❌ Faux' => 0,
                     '✅ Vrai' => 1,
                 ],
             ])
-            ->add('isVerified')
+            ->add('isVerified', ChoiceType::class, [
+                'choices' => [
+                    '❌' => 0,
+                    '✅' => 1,
+                ],
+            ])
         ;
     }
 

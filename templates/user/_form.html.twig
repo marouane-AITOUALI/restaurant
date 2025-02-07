@@ -42,8 +42,8 @@
 
     {# Vérifié (Checkbox) #}
     <div class="flex items-center space-x-2">
+        {{ form_label(form.isVerified, 'Compte vérifié ?', {'attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
         {{ form_widget(form.isVerified, {'attr': {'class': 'rounded border-gray-300 focus:ring-indigo-500'}}) }}
-        <label class="text-sm text-gray-700">Vérifié</label>
     </div>
 
     {# Bouton de soumission #}
