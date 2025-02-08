@@ -31,9 +31,6 @@ WORKDIR /var/www/html
 # Copy files with correct ownership
 COPY --chown=appuser:appuser . .
 
-# Ensure .env file has correct permissions
-RUN chown appuser:appuser /var/www/html/.env
-
 # Set environment to production (optional)
 ENV APP_ENV=prod
 
