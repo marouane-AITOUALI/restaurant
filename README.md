@@ -56,7 +56,7 @@ composer install
 Assurez-vous d'avoir dans votre .env :
 
 ```bash
-'OPENWEATHER_API_KEY' => Permet d'afficher la météo sur notre site Web
+'OPENWEATHER_API_KEY' => Permet d\'afficher la météo sur notre site Web
 'DATABASE_URL' => Afin de créer votre bdd et passer la migration
 'MAILER_DSN' => Pour l'envoi de mail/ Validation de l'inscription par mail 
 ```
