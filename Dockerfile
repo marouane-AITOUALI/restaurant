@@ -34,8 +34,8 @@ COPY --chown=appuser:appuser . .
 # Set environment to production (optional)
 ENV APP_ENV=prod
 
-# Install PHP dependencies
-RUN composer install 
+# Install PHP dependencies without needing .env files
+RUN composer install --no-dev --optimize-autoloader
 
 # Install npm dependencies and build Tailwind
 RUN npm install && npm run build:css
