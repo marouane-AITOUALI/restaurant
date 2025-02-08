@@ -27,6 +27,8 @@ WORKDIR /var/www/html
 
 # Copie les fichiers du projet dans le conteneur
 COPY . /var/www/html
+# Copy Render's .env file to the project root
+RUN cp /etc/secrets/.env /var/www/html/.env
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
