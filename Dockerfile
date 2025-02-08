@@ -1,44 +1,40 @@
-# Use PHP with Apache
+# Utilise une image PHP avec Apache
 FROM php:8.2-apache
 
-# Install necessary dependencies
+# Installe les dépendances nécessaires, y compris libzip-dev
 RUN apt-get update && apt-get install -y \
-    git zip unzip libpng-dev libzip-dev \
-    default-mysql-client nodejs npm
+    git zip unzip libpng-dev \
+    libzip-dev default-mysql-client
 
-# Install PHP extensions
+# Installe les extensions PHP nécessaires
 RUN docker-php-ext-install pdo pdo_mysql zip gd
 
-# Enable Apache rewrite module
+# Active le module Apache rewrite
 RUN a2enmod rewrite
 
-# Set the correct working directory
+# Ensure Apache has the right permissions
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html
+
+# Modify Apache configuration to allow access
+RUN echo '<Directory /var/www/html>' > /etc/apache2/sites-available/000-default.conf
+RUN echo '    Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '    AllowOverride All' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '    Require all granted' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '</Directory>' >> /etc/apache2/sites-available/000-default.conf
+
 WORKDIR /var/www/html
 
-# Copy project files
+# Copie les fichiers du projet dans le conteneur
 COPY . /var/www/html
 
-# Ensure Composer is available
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Modify Apache configuration to set the document root to "public/"
-RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+# Installe les dépendances Symfony
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --no-autoloader
 
-# Ensure proper file permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Installe Node.js, npm et build Tailwind CSS
+RUN apt-get install -y nodejs npm && npm install && npm run build:css
 
-# ✅ Install all Composer dependencies, including symfony/runtime
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
-
-# ✅ Ensure symfony/runtime is installed
-RUN composer require symfony/runtime --no-scripts --no-interaction
-
-# ✅ Clear Symfony cache after dependencies are installed
-RUN php bin/console cache:clear
-
-# Build Tailwind CSS if needed
-RUN npm install && npm run build:css
-
-# Start Apache
+# Démarre Apache
 CMD ["apache2-foreground"]
