@@ -51,39 +51,54 @@ npm install
 composer install
 ```
 
+### 3. Rajouter votre propre fichier .env
+
+Assurez-vous d'avoir dans votre .env :
+
+```bash
+'OPENWEATHER_API_KEY' => Permet d'afficher la météo sur notre site Web
+'DATABASE_URL' => Afin de créer votre bdd et passer la migration
+'MAILER_DSN' => Pour l'envoi de mail/ Validation de l'inscription par mail 
+```
+
 ## Utilisation
 
 ### Démarrer en mode développement
 
 ```bash
-symfony server:start
 npm run watch
+symfony server:start
 ```
 
 ### Générer les fichiers pour la production
 
 ```bash
-npm run build
+npm run build:css
 ```
 
 ## Structure du projet
 
 ```
 KoulMaghreb/
-├── public/
-│   ├── index.html
-│   ├── assets/
-│   │   ├── css/
-│   │   │   ├── styles.css
-│   │   │   ├── tailwind.min.css
-│   │   └── images/
-├── src/
+├── assets
+├── bin
 ├── config/
 ├── migrations/
+├── node_modules/
+├── public/
+    ├── build/
+├── src/
+    ├── Controller/
+    ├── DataFixtures/
+    ├── Entity/
+    ├── Form/
+    ├── Repository/
+    ├── Security/
 ├── templates/
-├── tailwind.config.js
-├── package.json
 ├── composer.json
+├── package.json
+├── Dockerfile
+├── tailwind.config.js
 ```
 
 ## Fonctionnalités
