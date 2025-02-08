@@ -1,31 +1,46 @@
-# Utilise une image PHP avec Apache
+# Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Installe les extensions PHP nécessaires
-RUN docker-php-ext-install pdo pdo_mysql
+# Install system dependencies for Composer, Symfony, and Node.js
+RUN apt-get update && apt-get install -y \
+    unzip \
+    curl \
+    git \
+    lsb-release \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Active le module Apache rewrite
-RUN a2enmod rewrite
+# Install Composer globally
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Installe Composer
-RUN apt-get update && apt-get install -y unzip curl git \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Verify Composer installation
+RUN composer --version
 
-# Installe Symfony CLI (en tant que prérequis pour 'symfony-cmd')
+# Install Symfony CLI globally
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
-# Copie les fichiers du projet dans le conteneur
-COPY . /var/www/html
+# Install Node.js (via NodeSource) and npm
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs
 
-# Installe les dépendances Symfony
+# Set the working directory for the container
+WORKDIR /var/www/html
+
+# Copy the project files into the container
+COPY . .
+
+# Set file permissions to make sure Apache can serve the files
+RUN chown -R www-data:www-data /var/www/html
+
+# Install PHP dependencies with Composer (no dev dependencies, optimized autoloader)
 RUN composer install --no-dev --optimize-autoloader
 
-# Installe Node.js, npm et build Tailwind CSS
-RUN apt-get install -y nodejs npm && npm install && npm run build:css
+# Install npm dependencies and build Tailwind CSS
+RUN npm install && npm run build:css
 
-# Expose le port 80
+# Expose port 80 for the Apache web server
 EXPOSE 80
 
-# Démarre Apache
+# Start Apache in the foreground
 CMD ["apache2-foreground"]
