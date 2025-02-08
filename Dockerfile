@@ -11,6 +11,10 @@ RUN a2enmod rewrite
 RUN apt-get update && apt-get install -y unzip curl git \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Installe Symfony CLI (en tant que prérequis pour 'symfony-cmd')
+RUN curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+
 # Copie les fichiers du projet dans le conteneur
 COPY . /var/www/html
 
