@@ -32,7 +32,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 
 # Installe les dépendances Symfony
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --no-autoloader
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --optimize-autoloader
 
 # Installe Node.js, npm et build Tailwind CSS
 RUN apt-get install -y nodejs npm && npm install && npm run build:css
