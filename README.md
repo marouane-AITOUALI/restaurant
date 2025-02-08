@@ -1,142 +1,133 @@
 # KoulMaghreb
 
-**[KoulMaghreb]((https://restaurant-704m.onrender.com/)** est un restaurant maghrébin
-**Mot-clé principal** : *KoulMaghreb*
-
-* * *
+**[KoulMaghreb](https://restaurant-704m.onrender.com/)** est une application web de gestion de restaurant maghrébin développée en Symfony. Ce projet vise à offrir une expérience utilisateur unique en regroupant les saveurs authentiques de l'Algérie, de la Tunisie et du Maroc.
 
 ## Table des matières
 
-- [À propos du projet](# "#%C3%A0-propos-du-projet")
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Scripts](#scripts)
-- [Structure du projet](#structure-du-projet)
-- [Contribuer](#contribuer)
-  
-* * *
+- [À propos du projet](#À-propos-du-projet)
+- [Objectifs](#Objectifs)
+- [Installation](#Installation)
+- [Utilisation](#Utilisation)
+- [Structure du projet](#Structure-du-projet)
+- [Fonctionnalités](#Fonctionnalités)
+  - [Fonctionnalités utilisateur](#Fonctionnalités-utilisateur)
+  - [Fonctionnalités administrateur](#Fonctionnalités-administrateur)
+- [Fonctionnalités futures](#Fonctionnalités-futures)
+- [Contribuer](#Contribuer)
+- [Déploiement](#Déploiement)
 
 ## À propos du projet
 
-Le projet **KoulMaghreb** 
+Le projet **KoulMaghreb** a été conçu pour offrir une solution complète de gestion de restaurant, intégrant la réservation de tables, la gestion des menus et des événements, ainsi que des promotions pour attirer et fidéliser les clients.
 
-- Repas,
-- Réservation,
-- Courses,
-- Déménagements.
+### Pourquoi ce projet ?
 
-Grâce à des techniques SEO modernes et à l’utilisation des outils tels que **Tailwind CSS**, ce projet cherche à obtenir un classement optimal pour le mot-clé **KoulMaghreb**.
+Fondé en 1994 par trois amis passionnés de cuisine, **KoulMaghreb** est devenu un lieu emblématique où se rencontrent les traditions culinaires du Maghreb. Chaque plat raconte une histoire, et chaque client devient partie de cette aventure culinaire.
 
-* * *
+## Objectifs
+
+- **Gestion des réservations** : Permettre aux utilisateurs de réserver des tables en ligne.
+- **Organisation des événements** : Faciliter la création et la gestion des événements du restaurant.
+- **Gestion des menus et des plats** : Offrir une interface intuitive pour créer et modifier les menus.
+- **Promotions** : Attirer et fidéliser les clients avec des offres spéciales.
+- **Commentaires et évaluations** : Permettre aux clients de laisser des avis.
+- **Gestion des utilisateurs et des rôles** : Système d'administration sécurisé.
 
 ## Installation
 
-### 1\. Clonez le dépôt
-
-Pour commencer, récupérez le projet depuis GitHub :
+### 1. Clonez le dépôt
 
 ```bash
 git clone https://github.com/marouane-AITOUALI/restaurant.git
 cd restaurant
 ```
 
-### 2\. Installez les dépendances
+### 2. Installez les dépendances
 
-Assurez-vous d'avoir **Node.js** et **npm** installés, ainsi que le composer (Symfony bien sûr). Ensuite, exécutez la commande suivante pour installer les dépendances :
+Assurez-vous d'avoir **Node.js**, **npm**, **Composer** et **Symfony CLI** installés, puis exécutez :
 
 ```bash
 npm install
+composer install
 ```
-
-* * *
 
 ## Utilisation
 
 ### Démarrer en mode développement
 
-Pour démarrer le projet en mode développement et surveiller les modifications en direct :
-
 ```bash
+symfony server:start
 npm run watch
 ```
 
 ### Générer les fichiers pour la production
 
-Pour générer les fichiers CSS optimisés pour la production :
-
 ```bash
 npm run build
 ```
 
-* * *
-
-## Scripts
-
-Voici les scripts disponibles dans le projet :
-
-- **`npm run watch`** : Lance le projet en mode développement avec surveillance des fichiers.
-- **`npm run build`** : Génère les fichiers CSS optimisés pour la production.
-- **`composer install`**: Installe les dépendances !
-- **`symfony server:start`**: Lancer le projet
-
-* * *
-
 ## Structure du projet
-
-Voici la structure du projet pour une meilleure organisation :
 
 ```
 KoulMaghreb/
 ├── public/
 │   ├── index.html
-│   ├── a-propos-KoulMaghreb.html
-│   ├── services-livraison-KoulMaghreb.html
-│   ├── contact-KoulMaghreb.html
-│   ├── faq-KoulMaghreb.html
-│   ├── politique-confidentialite-KoulMaghreb.html
-│   ├── termes-conditions-KoulMaghreb.html
-│   ├── robots.txt
-│   ├── sitemap.xml
 │   ├── assets/
 │   │   ├── css/
 │   │   │   ├── styles.css
 │   │   │   ├── tailwind.min.css
 │   │   └── images/
+├── src/
+├── config/
+├── migrations/
+├── templates/
 ├── tailwind.config.js
 ├── package.json
-├── package-lock.json
+├── composer.json
 ```
 
-* * *
+## Fonctionnalités
+
+### Fonctionnalités utilisateur
+
+- **Inscription & connexion** avec vérification par email
+- **Gestion des réservations** (modification, suppression)
+- **Accès aux plats et menus**
+- **Participation aux événements**
+- **Laisser des avis et notes sur les plats**
+
+### Fonctionnalités administrateur
+
+- **Tableau de bord** pour la gestion des utilisateurs
+- **Gestion des événements et promotions**
+- **Ajout, modification et suppression de plats**
+- **Contrôle des réservations**
+
+## Fonctionnalités futures
+
+- **Chatbot IA** pour répondre aux questions des utilisateurs
+- **Recommandations personnalisées** basées sur les préférences
+- **Notifications d'événements et offres spéciales**
 
 ## Contribuer
 
-Les contributions sont les bienvenues ! Suivez les étapes suivantes pour contribuer :
+1. **Forkez** le dépôt.
+2. **Créez une branche** pour votre fonctionnalité :
+   ```bash
+   git checkout -b feature/ma-fonctionnalité
+   ```
+3. **Commitez** vos modifications :
+   ```bash
+   git commit -m 'Ajout de ma fonctionnalité'
+   ```
+4. **Poussez votre branche** :
+   ```bash
+   git push origin feature/ma-fonctionnalité
+   ```
+5. **Ouvrez une Pull Request.**
 
-1.  **Forkez** le dépôt.
-    
-2.  Créez une branche pour votre fonctionnalité :
-    
-    ```bash
-    git checkout -b feature/ma-fonctionnalité
-    ```
-    
-3.  **Commitez** vos modifications :
-    
-    ```bash
-    git commit -m 'Ajout de ma fonctionnalité'
-    ```
-    
-4.  Poussez votre branche :
-    
-    ```bash
-    git push origin feature/ma-fonctionnalité
-    ```
-    
-5.  Ouvrez une **Pull Request**.
+## Déploiement
 
-## Déploiement:
-```bash
-    Le projet est actuellement déployé, mais pour assurer son bon fonctionnement, il est nécessaire de passer à un plan payant afin d'alimenter la base de données. Nous avons besoin de support pour cela.
-    Le lien: https://restaurant-704m.onrender.com/
-```
+Le projet est actuellement déployé sur [Render](https://restaurant-704m.onrender.com/), mais requiert un plan payant pour assurer le bon fonctionnement de la base de données.
+
+---
