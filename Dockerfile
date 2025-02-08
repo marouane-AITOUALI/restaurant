@@ -2,7 +2,9 @@
 FROM php:8.2-apache
 
 # Installe les dépendances nécessaires, y compris libzip-dev
-RUN apt-get update && apt-get install -y unzip curl git libzip-dev
+RUN apt-get update && apt-get install -y \
+    git zip unzip libpng-dev \
+    libzip-dev default-mysql-client
 
 # Installe les extensions PHP nécessaires
 RUN docker-php-ext-install pdo pdo_mysql zip gd
