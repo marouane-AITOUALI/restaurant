@@ -28,14 +28,17 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Install Symfony dependencies
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --no-autoloader --no-dev
+# ✅ Install all Composer dependencies, including symfony/runtime
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
+
+# ✅ Ensure symfony/runtime is installed
+RUN composer require symfony/runtime --no-scripts --no-interaction
+
+# ✅ Clear Symfony cache after dependencies are installed
+RUN php bin/console cache:clear
 
 # Build Tailwind CSS if needed
 RUN npm install && npm run build:css
-
-# Clear Symfony cache
-RUN php bin/console cache:clear
 
 # Start Apache
 CMD ["apache2-foreground"]
