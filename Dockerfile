@@ -1,7 +1,7 @@
 # Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Install system dependencies for Composer, Symfony, and Node.js
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     unzip \
     curl \
@@ -13,34 +13,35 @@ RUN apt-get update && apt-get install -y \
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Verify Composer installation
-RUN composer --version
-
-# Install Symfony CLI globally
-RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
-
-# Install Node.js (via NodeSource) and npm
+# Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs
 
-# Set the working directory for the container
+# Create non-root user and set permissions
+RUN useradd -u 1000 -d /home/appuser -m appuser && \
+    mkdir -p /var/www/html && \
+    chown -R appuser:appuser /var/www/html
+
+# Switch to non-root user
+USER appuser
+
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy the project files into the container
-COPY . .
+# Copy files with correct ownership
+COPY --chown=appuser:appuser . .
 
-# Set file permissions to make sure Apache can serve the files
-RUN chown -R www-data:www-data /var/www/html
-
-# Install PHP dependencies with Composer (no dev dependencies, optimized autoloader)
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install npm dependencies and build Tailwind CSS
+# Install npm dependencies and build Tailwind
 RUN npm install && npm run build:css
 
-# Expose port 80 for the Apache web server
-EXPOSE 80
+# Switch back to root for Apache setup
+USER root
 
-# Start Apache in the foreground
+# Set Apache permissions
+RUN chown -R www-data:www-data /var/www/html/public
+
+# Start Apache
 CMD ["apache2-foreground"]
