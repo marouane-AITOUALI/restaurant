@@ -8,6 +8,8 @@
 
 - [À propos du projet](#À-propos-du-projet)
 - [Objectifs](#Objectifs)
+- [Schéma de la base de données](#Schéma-de-la-base-de-données)
+- [Pré-requis](#Pré-requis)
 - [Installation](#Installation)
 - [Utilisation](#Utilisation)
 - [Structure du projet](#Structure-du-projet)
@@ -15,6 +17,11 @@
   - [Fonctionnalités utilisateur](#Fonctionnalités-utilisateur)
   - [Fonctionnalités administrateur](#Fonctionnalités-administrateur)
 - [Fonctionnalités futures](#Fonctionnalités-futures)
+- [Tests](#Tests)
+- [APIs et Voter](#APIs-et-Voter)
+  - [APIs](#APIs)
+  - [Voter](#Voter)
+- [Fonctionnalités bonus](#Fonctionnalités-bonus)
 - [Contribuer](#Contribuer)
 - [Déploiement](#Déploiement)
 
