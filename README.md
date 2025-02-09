@@ -11,6 +11,11 @@
 - [Schéma de la base de données](#Schéma-de-la-base-de-données)
 - [Pré-requis](#Pré-requis)
 - [Installation](#Installation)
+  - [Clonez le dépôt](#Clonez-le-dépôt)
+  - [Installez les dépendances](#Installez-les-dépendances)
+  - [.env File](#Rajouter-votre-propre-fichier-.env)
+  - [Base de données](#Créer-la-base-de-données)
+  - [Fixtures](#Ajouter-les-fixtures)
 - [Utilisation](#Utilisation)
 - [Structure du projet](#Structure-du-projet)
 - [Fonctionnalités](#Fonctionnalités)
@@ -82,6 +87,19 @@ Assurez-vous d'avoir dans votre .env :
 'OPENWEATHER_API_KEY' => Permet d\'afficher la météo sur notre site Web
 'DATABASE_URL' => Afin de créer votre bdd et passer la migration
 'MAILER_DSN' => Pour l'envoi de mail/ Validation de l'inscription par mail 
+```
+
+### 4. Créer la base de données
+
+```bash
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+```
+
+### 5. Ajouter les fixtures :
+
+```bash
+php bin/console doctrine:fixtures:load
 ```
 
 ## Utilisation
