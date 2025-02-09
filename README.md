@@ -1,5 +1,7 @@
 # KoulMaghreb
 
+< https://restaurant-704m.onrender.com/ >
+
 **[KoulMaghreb](https://restaurant-704m.onrender.com/)** est une application web de gestion de restaurant maghrébin développée en Symfony. Ce projet vise à offrir une expérience utilisateur unique en regroupant les saveurs authentiques de l'Algérie, de la Tunisie et du Maroc.
 
 ## Table des matières
@@ -32,6 +34,18 @@ Fondé en 1994 par trois amis passionnés de cuisine, **KoulMaghreb** est devenu
 - **Promotions** : Attirer et fidéliser les clients avec des offres spéciales.
 - **Commentaires et évaluations** : Permettre aux clients de laisser des avis.
 - **Gestion des utilisateurs et des rôles** : Système d'administration sécurisé.
+
+## Schéma de la base de données:
+![bdd](https://github.com/user-attachments/assets/322293e5-1c1c-4266-b237-8882a8c24075)
+
+## Pré-requis:
+Voici les outils et versions nécessaires pour exécuter ce projet :
+
+- PHP 8.1 ou supérieur
+- Composer (gestionnaire de dépendances PHP)
+- Symfony CLI (outil en ligne de commande pour Symfony)
+- Base de données : MySQL ou PostgreSQL
+- Node.js et npm (pour lancer les commandes TailwindCSS)
 
 ## Installation
 
@@ -95,6 +109,7 @@ KoulMaghreb/
     ├── Repository/
     ├── Security/
 ├── templates/
+├── tests/
 ├── composer.json
 ├── package.json
 ├── Dockerfile
@@ -123,6 +138,36 @@ KoulMaghreb/
 - **Chatbot IA** pour répondre aux questions des utilisateurs
 - **Recommandations personnalisées** basées sur les préférences
 - **Notifications d'événements et offres spéciales**
+
+
+## Tests
+
+- Vous avez dans le répertoire tests, deux dossiers (Controller: pour les tests fonctionnels / Unit: pour les test unitaires)
+
+## Requêtes personnalisées avec Query Builder
+Des requêtes personnalisées ont été implémentées dans les repositories en utilisant Query Builder. Ex :
+- public function getDailySpecial(): array (PlatRepository)
+
+## Gestion des rôles et permissions
+Le projet implémente 4 rôles différents avec des permissions spécifiques :
+
+- Rôle Utilisateur : Accès limité à la consultation des menu et plats, à la réservation et à la réservation des évènements.
+- Rôle Administrateur : Accès complet à la gestion des utilisateurs, des réservations, des plats, commentaire... 
+- Rôle Banni : Ce rôle est attribué aux utilisateurs bannis. Les utilisateurs avec ce rôle ne peuvent pas effectuer d'actions spécifiques sur le site, grâce au AccessDeniedHandler.
+- ROLE_ORGANISATEUR_EVENT: Permet d'organiser des évènements et de gérer la réservation grâce au VoterPersonnalisé!.
+
+
+## APIs et Voter:
+### APIS
+- Envoi de mail : L'application utilise Symfony mailer pour la vérification des users mails à l'inscription
+- Accès à une API Externe: OpenWeather afin d'avoir la météo de la ville de Paris
+### Voter
+Voters personnalisés qui définit le rôle de ROLE_ORGANISATEUR_EVENT: Ce rôle permet de créer des évènements dans notre site !
+
+## Fonctionnalités bonus
+- Upload et Stockage des images en local
+- DockerFile pour la conteneurisation du projet
+- AccessDeniedHandler
 
 ## Contribuer
 
